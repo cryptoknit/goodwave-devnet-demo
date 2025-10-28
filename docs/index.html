@@ -21,14 +21,10 @@
   .legend{display:flex;gap:16px;margin:6px 0 12px;font-size:13px;color:#9fb4ff}
   .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
   .b{background:#4e8cff}.g{background:#38d39f}.o{background:#ff9f40}
-
   #chart{width:100%;height:480px;background:#0e1421;border:1px solid #1a2340;border-radius:12px}
   canvas{width:100%;height:100%}
-
   .footer{margin-top:14px;font-size:12px;color:#7e8fb4;text-align:center}
   .pill{display:inline-block;padding:4px 8px;border:1px solid #23325a;border-radius:999px;background:#11192a;color:#aecdff;margin-left:8px;font-size:12px}
-
-  /* Modal */
   .modal-back{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:50}
   .modal{width:min(720px,92vw);background:#0f1627;border:1px solid #24345e;border-radius:14px;box-shadow:0 10px 30px #0007}
   .modal header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #1e2a4c}
@@ -79,7 +75,6 @@
     <div class="footer">Updates ~every 60s from <code>docs/data/index.json</code> & <code>docs/data/ledger.tsv</code>. Powered by Runwell 2.1.</div>
   </div>
 
-  <!-- Tokenomics Modal -->
   <div class="modal-back" id="tokBack" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal">
       <header>
@@ -112,78 +107,18 @@
   </div>
 
 <script>
-const INDEX_URL  = 'data/index.json';
-const LEDGER_URL = 'data/ledger.tsv';
-
-const c = document.getElementById('c');
-const ctx = c.getContext('2d');
-const $stats = document.getElementById('stats');
-const $points = document.getElementById('points');
-
-function fmt(x){ return Number(x||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:6}); }
-
-function sizeCanvas(){
-  const w=c.clientWidth, h=c.clientHeight, r=window.devicePixelRatio||1;
-  c.width=Math.floor(w*r); c.height=Math.floor(h*r); ctx.setTransform(r,0,0,r,0,0);
-}
-
-function draw(xs, staked, earned, fees){
-  sizeCanvas();
-  const w=c.clientWidth, h=c.clientHeight;
-  ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle='#1a2a4f'; ctx.lineWidth=1;
-  for(let i=0;i<6;i++){ const y=(h-40)*(i/5)+20; ctx.beginPath(); ctx.moveTo(50,y); ctx.lineTo(w-20,y); ctx.stroke(); }
-  const padL=60, padR=20, padT=20, padB=30;
-  const W=w-padL-padR, H=h-padT-padB;
-  const maxY=Math.max(1,...staked,...earned,...fees);
-  const toX=i=> padL + W * (i/Math.max(1,(xs.length-1)));
-  const toY=v=> padT + H - (H*(v/maxY));
-  function line(s,col){ if(!s.length) return; ctx.beginPath(); s.forEach((v,i)=>{const x=toX(i),y=toY(v); i?ctx.lineTo(x,y):ctx.moveTo(x,y)}); ctx.strokeStyle=col; ctx.lineWidth=2; ctx.stroke(); }
-  line(staked,'#4e8cff'); line(earned,'#38d39f'); line(fees,'#ff9f40');
-}
-
-async function j(u){ const r=await fetch(u+'?t='+Date.now()); if(!r.ok) throw new Error(u+': '+r.status); return r.json(); }
-async function t(u){ const r=await fetch(u+'?t='+Date.now()); if(!r.ok) return ''; return r.text(); }
-
-function feesSeries(xs, text){
-  const ev=[]; text.split('\n').forEach(l=>{
-    if(!l.trim()) return; const [iso,label,amt]=l.split('\t'); if(!iso||!label||!label.startsWith('PlatformFee(')) return;
-    const ts=Date.parse(iso); if(isNaN(ts)) return; const a=parseFloat(amt||'0'); if(!isFinite(a)) return; ev.push({ts,a});
-  }); ev.sort((a,b)=>a.ts-b.ts);
-  const out=[], xsT=xs.map(s=>Date.parse(s)); let i=0, sum=0;
-  ev.forEach(e=>{ while(i<xsT.length && xsT[i] < e.ts){ out[i]=sum; i++; } sum+=e.a; while(i<xsT.length && xsT[i] <= e.ts){ out[i]=sum; i++; } });
-  while(i<xsT.length){ out[i]=sum; i++; } return out.length?out:xs.map(()=>0);
-}
-
-async function load(){
-  try{
-    const data = await j(INDEX_URL);
-    const xs = (data.points||[]).map(p=>p.ts);
-    const staked = (data.points||[]).map(p=>Number(p.total_staked||0));
-    const earned = (data.points||[]).map(p=>Number(p.total_earned||0));
-    const ledger = await t(LEDGER_URL);
-    const fees = feesSeries(xs, ledger);
-    const feesTotal = fees.at(-1)||0;
-
-    $stats.innerHTML =
-      `<b>Total Staked:</b> ${fmt(staked.at(-1))} GWAVE &nbsp; | &nbsp; `+
-      `<b>Total Earned:</b> ${fmt(earned.at(-1))} GWAVE &nbsp; | &nbsp; `+
-      `<b>Total Fees Earned:</b> ${fmt(feesTotal)} GWAVE <span class="pill" id="points">points: ${(data.points||[]).length}</span>`+
-      `<span class="pill">APY: 12%</span><span class="pill">Lock: 30 days</span>`;
-
-    draw(xs, staked, earned, fees);
-  }catch(e){ console.error(e); }
-}
-load(); setInterval(load, 10000); window.addEventListener('resize', ()=>load());
-
-/* Modal wiring */
-const tokBack = document.getElementById('tokBack');
-document.getElementById('tokenomicsBtn').onclick=()=>{ tokBack.style.display='flex'; tokBack.setAttribute('aria-hidden','false'); };
-document.getElementById('tokClose').onclick=()=>{ tokBack.style.display='none'; tokBack.setAttribute('aria-hidden','true'); };
-tokBack.onclick=(e)=>{ if(e.target===tokBack) { tokBack.style.display='none'; tokBack.setAttribute('aria-hidden','true'); } };
-
-/* Stake button (demo) */
-document.getElementById('stakeBtn').onclick=(e)=>{ e.preventDefault(); alert('Devnet demo: staking is simulated from a local Runwell node.'); };
+const INDEX_URL='data/index.json', LEDGER_URL='data/ledger.tsv';
+const c=document.getElementById('c'), ctx=c.getContext('2d'), $stats=document.getElementById('stats');
+function fmt(x){return Number(x||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:6});}
+function size(){const w=c.clientWidth,h=c.clientHeight,r=window.devicePixelRatio||1;c.width=Math.floor(w*r);c.height=Math.floor(h*r);ctx.setTransform(r,0,0,r,0,0);}
+function draw(xs,st,er,fe){size();const w=c.clientWidth,h=c.clientHeight;ctx.clearRect(0,0,w,h);ctx.strokeStyle='#1a2a4f';ctx.lineWidth=1;for(let i=0;i<6;i++){const y=(h-40)*(i/5)+20;ctx.beginPath();ctx.moveTo(50,y);ctx.lineTo(w-20,y);ctx.stroke();}const L=60,R=20,T=20,B=30,W=w-L-R,H=h-T-B,M=Math.max(1,...st,...er,...fe);const x=i=>L+W*(i/Math.max(1,(xs.length-1)));const y=v=>T+H-(H*(v/M));function line(s,col){if(!s.length)return;ctx.beginPath();s.forEach((v,i)=>{const X=x(i),Y=y(v);i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});ctx.strokeStyle=col;ctx.lineWidth=2;ctx.stroke();}line(st,'#4e8cff');line(er,'#38d39f');line(fe,'#ff9f40');}
+async function j(u){const r=await fetch(u+'?t='+Date.now());if(!r.ok)throw new Error(u+': '+r.status);return r.json();}
+async function t(u){const r=await fetch(u+'?t='+Date.now());if(!r.ok)return'';return r.text();}
+function feesSeries(xs,txt){const ev=[];txt.split('\n').forEach(l=>{if(!l.trim())return;const[a,b,c]=l.split('\t');if(!a||!b||!b.startsWith('PlatformFee('))return;const ts=Date.parse(a);if(isNaN(ts))return;const v=parseFloat(c||'0');if(!isFinite(v))return;ev.push({ts,v});});ev.sort((a,b)=>a.ts-b.ts);const out=[],ts=xs.map(s=>Date.parse(s));let i=0,sum=0;ev.forEach(e=>{while(i<ts.length&&ts[i]<e.ts){out[i]=sum;i++;}sum+=e.v;while(i<ts.length&&ts[i]<=e.ts){out[i]=sum;i++;}});while(i<ts.length){out[i]=sum;i++;}return out.length?out:xs.map(()=>0);}
+async function load(){try{const d=await j(INDEX_URL);const xs=(d.points||[]).map(p=>p.ts);const st=(d.points||[]).map(p=>Number(p.total_staked||0));const er=(d.points||[]).map(p=>Number(p.total_earned||0));const led=await t(LEDGER_URL);const fe=feesSeries(xs,led);const ft=fe.at(-1)||0;$stats.innerHTML=`<b>Total Staked:</b> ${fmt(st.at(-1))} GWAVE &nbsp; | &nbsp; <b>Total Earned:</b> ${fmt(er.at(-1))} GWAVE &nbsp; | &nbsp; <b>Total Fees Earned:</b> ${fmt(ft)} GWAVE <span class="pill" id="points">points: ${(d.points||[]).length}</span><span class="pill">APY: 12%</span><span class="pill">Lock: 30 days</span>`;draw(xs,st,er,fe);}catch(e){console.error(e);}}
+load();setInterval(load,10000);window.addEventListener('resize',()=>load());
+const tokBack=document.getElementById('tokBack');document.getElementById('tokenomicsBtn').onclick=()=>{tokBack.style.display='flex';tokBack.setAttribute('aria-hidden','false');};document.getElementById('tokClose').onclick=()=>{tokBack.style.display='none';tokBack.setAttribute('aria-hidden','true');};tokBack.onclick=(e)=>{if(e.target===tokBack){tokBack.style.display='none';tokBack.setAttribute('aria-hidden','true');}};
+document.getElementById('stakeBtn').onclick=(e)=>{e.preventDefault();alert('Devnet demo: staking is simulated from a local Runwell node.');};
 </script>
 </body>
 </html>
