@@ -2014,7 +2014,17 @@
       "ts": null,
       "total_staked": 850,
       "total_earned": 110.4048000000006
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 110.68360000000061
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 110.9624000000006
     }
   ],
-  "fees_total": 2.940520
+  "fees_total": 2.965120
 }
