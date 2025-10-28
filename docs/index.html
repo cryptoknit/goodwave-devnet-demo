@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>🌊 GoodWave Staking — Devnet Live Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:#0b0f17; color:#cfe3ff;}
+    .wrap { max-width:1100px; margin:48px auto; padding:0 16px; }
+    h1 { font-size:32px; color:#2d6bff; display:flex; align-items:center; gap:.5rem; }
+    .stats { margin:16px 0 8px; font-size:16px; color:#bcd0ff;}
+    .stats b { color:#eaf1ff; }
+    .muted { color:#7e8fb4; font-size:12px; }
+    #chart { width:100%; height:480px; background:#0e1421; border:1px solid #1a2340; border-radius:12px; }
+    canvas { width:100%; height:100%; }
+    .legend { display:flex; gap:16px; margin:6px 0 12px; font-size:13px; color:#9fb4ff;}
+    .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+    .b{background:#4e8cff}.g{background:#38d39f}.o{background:#ff9f40}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🌊 GoodWave Staking — Devnet Live Demo</h1>
+
+    <div class="stats" id="stats">
+      <b>Total Staked:</b> — GWAVE &nbsp; | &nbsp;
+      <b>Total Earned:</b> — GWAVE &nbsp; | &nbsp;
+      <b>Total Fees Earned:</b> — GWAVE
+      <span class="muted" id="points"></span>
+    </div>
+
+    <div class="legend">
+      <span><span class="dot b"></span>Staked</span>
+      <span><span class="dot g"></span>Earned</span>
+      <span><span class="dot o"></span>Fees (cumulative)</span>
+    </div>
+
+    <div id="chart"><canvas id="c"></canvas></div>
+    <p class="muted" style="text-align:center;margin-top:10px">
+      Updates ~every 60s from <code>docs/data/index.json</code> & <code>docs/data/ledger.tsv</code>
+    </p>
+  </div>
+
+<script>
+const INDEX_URL  = 'data/index.json';
+const LEDGER_URL = 'data/ledger.tsv';
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+function fmt(x){ return Number(x).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:6}); }
+
+function sizeCanvas(){
+  const w = canvas.clientWidth, h = canvas.clientHeight, r = window.devicePixelRatio||1;
+  canvas.width = Math.floor(w*r); canvas.height = Math.floor(h*r); ctx.setTransform(r,0,0,r,0,0);
+}
+
+function drawChart(xs, staked, earned, fees){
+  sizeCanvas();
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle='#1a2a4f'; ctx.lineWidth=1;
+  for(let i=0;i<6;i++){ const y=(h-40)*(i/5)+20; ctx.beginPath(); ctx.moveTo(50,y); ctx.lineTo(w-20,y); ctx.stroke(); }
+  const padL=60, padR=20, padT=20, padB=30;
+  const plotW=w-padL-padR, plotH=h-padT-padB;
+  const maxY=Math.max(1,...staked,...earned,...fees);
+  const toX=i=> padL + plotW * (i/Math.max(1,(xs.length-1)));
+  const toY=v=> padT + plotH - (plotH * (v/maxY));
+  function line(series,color){
+    if(!series.length) return;
+    ctx.beginPath();
+    series.forEach((v,i)=>{ const x=toX(i), y=toY(v); i?ctx.lineTo(x,y):ctx.moveTo(x,y); });
+    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+  }
+  line(staked,'#4e8cff'); line(earned,'#38d39f'); line(fees,'#ff9f40');
+}
+
+async function fetchJSON(u){ const r=await fetch(u+'?t='+Date.now()); if(!r.ok) throw new Error(u+': '+r.status); return r.json(); }
+async function fetchText(u){ const r=await fetch(u+'?t='+Date.now()); if(!r.ok) return ''; return r.text(); }
+
+function buildFeeSeries(xs, text){
+  const events=[]; 
+  text.split('\n').forEach(line=>{
+    if(!line.trim()) return;
+    const [iso,label,amt] = line.split('\t');
+    if(!iso || !label || !label.startsWith('PlatformFee(')) return;
+    const t=Date.parse(iso); if(isNaN(t)) return;
+    const a=parseFloat(amt||'0'); if(!isFinite(a)) return;
+    events.push({t,a});
+  });
+  events.sort((a,b)=>a.t-b.t);
+  let out=[], i=0, sum=0;
+  const xsT = xs.map(s=>Date.parse(s));
+  events.forEach(e=>{
+    while(i<xsT.length && xsT[i] < e.t){ out[i]=sum; i++; }
+    sum += e.a;
+    while(i<xsT.length && xsT[i] <= e.t){ out[i]=sum; i++; }
+  });
+  while(i<xsT.length){ out[i]=sum; i++; }
+  return out.length?out:xs.map(()=>0);
+}
+
+async function load(){
+  try{
+    const data = await fetchJSON(INDEX_URL);
+    const xs = (data.points||[]).map(p=>p.ts);
+    const staked = (data.points||[]).map(p=> Number(p.total_staked||0));
+    const earned = (data.points||[]).map(p=> Number(p.total_earned||0));
+    const ledger = await fetchText(LEDGER_URL);
+    const feesSeries = buildFeeSeries(xs, ledger);
+    const feesTotal = feesSeries.at(-1)||0;
+    document.getElementById('stats').innerHTML =
+      `<b>Total Staked:</b> ${fmt(staked.at(-1)||0)} GWAVE &nbsp; | &nbsp; `+
+      `<b>Total Earned:</b> ${fmt(earned.at(-1)||0)} GWAVE &nbsp; | &nbsp; `+
+      `<b>Total Fees Earned:</b> ${fmt(feesTotal)} GWAVE `+
+      `<span class="muted" id="points">(points: ${(data.points||[]).length})</span>`;
+    drawChart(xs, staked, earned, feesSeries);
+  }catch(e){ console.error(e); }
+}
+load(); setInterval(load, 10000);
+window.addEventListener('resize', ()=>{ load(); });
+</script>
+</body>
+</html>
