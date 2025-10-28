@@ -2854,6 +2854,11 @@
       "ts": null,
       "total_staked": 850,
       "total_earned": 157.24320000000108
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 157.5220000000011
     }
   ],
   "fees_total": 4.806840
