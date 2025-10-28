@@ -2669,7 +2669,222 @@
       "ts": null,
       "total_staked": 850,
       "total_earned": 146.92760000000095
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 147.20640000000094
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 147.48520000000096
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 147.76400000000098
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 148.04280000000097
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 148.32160000000096
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 148.60040000000097
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 148.879200000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 149.15800000000098
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 149.43680000000097
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 149.715600000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 149.994400000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 150.273200000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 150.552000000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 150.830800000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 151.10960000000102
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 151.388400000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 151.667200000001
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 151.94600000000102
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 152.22480000000104
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 152.50360000000103
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 152.78240000000102
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 153.06120000000104
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 153.34000000000106
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 153.61880000000104
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 153.89760000000103
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 154.17640000000105
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 154.45520000000107
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 154.73400000000106
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 155.01280000000105
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 155.29160000000107
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 155.5704000000011
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 155.84920000000108
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 156.12800000000107
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 156.40680000000108
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 156.6856000000011
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 156.9644000000011
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 157.24320000000108
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 157.5220000000011
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 157.80080000000112
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 158.0796000000011
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 158.3584000000011
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 158.63720000000112
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 158.91600000000113
     }
   ],
-  "fees_total": 4.389460
+  "fees_total": 4.870800
 }

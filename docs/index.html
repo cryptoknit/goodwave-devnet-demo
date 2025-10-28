@@ -1,114 +1,6503 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GoodWave Staking — Devnet Live Demo</title>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- GWAVE TOKENOMICS MODAL -->
 <style>
-  :root { --bg:#0b1220; --panel:#0f1830; --text:#e7eeff; --muted:#8aa1c7; --accent:#3b82f6; }
-  html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial;}
-  .wrap{max-width:1000px;margin:42px auto;padding:0 20px;}
-  h1{font-weight:800;letter-spacing:.3px;margin:0 0 12px;}
-  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 18px;}
-  .card{background:var(--panel);border-radius:14px;padding:16px 18px;box-shadow:0 2px 18px rgba(0,0,0,.25)}
-  .k{font-size:13px;color:var(--muted);margin-bottom:6px}
-  .v{font-size:22px;font-weight:750}
-  .live{margin:8px 0 18px;font-size:13px;color:#86efac}
-  .legend{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:10px 0 6px}
-  .dot{width:10px;height:10px;border-radius:50%}
-  .row{display:flex;align-items:center;gap:10px}
-  canvas{background:#0a1327;border-radius:14px}
-  a{color:#9cc2ff;text-decoration:none}
-  .muted{color:var(--muted)}
+  dialog#gw-tokenomics-modal { border:none; border-radius:16px; padding:0; max-width:680px; width:92%; color:#e5e7eb; background:#0b1220; }
+  .gw-modal { padding:1rem 1.25rem 1.25rem; }
+  .gw-modal h2 { margin:0 0 .25rem; font:700 18px/1.2 system-ui; color:#93c5fd; }
+  .gw-modal p, .gw-modal li { font:500 14px/1.5 system-ui; color:#cbd5e1; }
+  .gw-modal .muted { color:#9ca3af; font-size:12px; }
+  .gw-close { float:right; background:#111827; border:1px solid rgba(255,255,255,.08); border-radius:10px; padding:.25rem .5rem; color:#e5e7eb; cursor:pointer; }
+  dialog::backdrop { background:rgba(0,0,0,.65); }
 </style>
-</head>
-<body>
-  <div class="wrap">
-    <h1>🌊 GoodWave Staking — Devnet Live Demo</h1>
+<dialog id="gw-tokenomics-modal">
+  <div class="gw-modal">
+    <button class="gw-close" onclick="document.getElementById('gw-tokenomics-modal').close()">Close</button>
+    <h2>GoodWave Tokenomics (Demo)</h2>
+    <ul>
+      <li>Supply split: Staking Rewards • Community • Treasury • Team (vesting)</li>
+      <li>Fees: Platform fee accrues transparently to on-chain fee wallet</li>
+      <li>Rewards: Distributed proportionally to stake weight and time-in-pool</li>
+    </ul>
+    <p class="muted">Transparency: Live metrics mirror at <code>docs/data/*.json</code>. Demo APY may differ from realised returns. Not financial advice.</p>
+  </div>
+</dialog>
+<!-- /GWAVE TOKENOMICS MODAL -->
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<!-- GWAVE PILLS MODULE -->
 
-    <div class="kpis">
-      <div class="card"><div class="k">Total Staked</div><div class="v" id="kpi-staked">— GWAVE</div></div>
-      <div class="card"><div class="k">Total Earned</div><div class="v" id="kpi-earned">— GWAVE</div></div>
-      <div class="card"><div class="k">Total Fees Earned</div><div class="v" id="kpi-fees">— GWAVE</div></div>
-    </div>
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<style>
 
-    <div class="live" id="kpi-live">LIVE • waiting for data…</div>
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-pills { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 1rem; }
 
-    <div class="legend">
-      <div class="row"><div class="dot" style="background:#60a5fa"></div><span>Staked</span></div>
-      <div class="row"><div class="dot" style="background:#34d399"></div><span>Earned</span></div>
-      <div class="row"><div class="dot" style="background:#f59e0b"></div><span>Fees (cumulative)</span></div>
-    </div>
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gw-pill { position:relative; padding:.4rem .6rem; border-radius:999px; font:600 12px/1 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
 
-    <div class="card"><canvas id="gw-chart" height="120"></canvas></div>
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    background:#0f172a; color:#dbeafe; border:1px solid rgba(148,163,184,.25); }
 
-    <p class="muted" style="margin-top:14px">
-      Updates every ~60s from <code>docs/data/index.json</code> and <code>docs/data/pool.json</code>.
-      Source: <a href="./">repo</a>
-    </p>
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gw-pill[data-variant="apy"]{ background:#052e16; color:#bbf7d0; border-color:rgba(74,222,128,.25);}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gw-pill[data-variant="lock"]{ background:#1e1b4b; color:#e9d5ff; border-color:rgba(196,181,253,.25);}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gw-pill[data-variant="points"]{ background:#0b1220; color:#c7d2fe;}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gw-tip { position:absolute; z-index:50; left:50%; transform:translateX(-50%); bottom:calc(100% + 8px);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    white-space:nowrap; padding:.45rem .6rem; border-radius:10px; font:500 12px/1.2 system-ui; background:#111827; color:#e5e7eb;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    border:1px solid rgba(255,255,255,.08); opacity:0; pointer-events:none; transition:opacity .15s ease; }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gw-pill:hover .gw-tip{opacity:1}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</style>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<div id="gw-pills" class="gwave-pills" hidden>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <div class="gw-pill" data-variant="apy" id="pill-apy">APY: <span id="pill-apy-val">—</span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <span class="gw-tip">Demo APY from pool/index data (not financial advice)</span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   </div>
 
 <script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <div class="gw-pill" data-variant="lock" id="pill-lock">Lock: <span id="pill-lock-val">—</span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <span class="gw-tip">Indicative lock period for staking program</span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  </div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <div class="gw-pill" data-variant="points" id="pill-points">Points: <span id="pill-points-val">—</span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <span class="gw-tip">Cumulative participation points (demo)</span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  </div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <button id="pill-tokenomics" class="gw-pill" style="cursor:pointer">Tokenomics</button>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+(async function(){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const pills = document.getElementById('gw-pills');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // Anchor: place after #kpi-live if present; else after first h1
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  try {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const kpi = document.getElementById('kpi-live');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const h1 = document.querySelector('h1');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (kpi) kpi.insertAdjacentElement('afterend', pills);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    else if (h1) h1.insertAdjacentElement('afterend', pills);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  } catch {}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const REL = (p)=>'data/'+p, LOCAL = (p)=>'http://127.0.0.1:5199/'+p;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const getJSON = async (p)=> {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const tryOne = (u)=>fetch(u+(u.includes('?')?'&':'?')+'_cb='+Date.now(),{cache:'no-store'})
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      .then(r=>r.ok?r.json():Promise.reject());
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    try { return await tryOne(REL(p)); } catch { try { return await tryOne(LOCAL(p)); } catch { return null; } }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const pool = await getJSON('pool.json') || {};
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const idx  = await getJSON('index.json') || {};
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // Points (from index.json if available)
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const pts = (typeof idx.points === 'number') ? idx.points : null;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // Lock days (optional)
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const lock = (typeof idx.lock_days === 'number') ? idx.lock_days : null;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // APY: prefer explicit idx.apy else demo from pool totals
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  let apy = (typeof idx.apy === 'number') ? idx.apy : null;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  if (apy == null && typeof pool.total_earned === 'number' && typeof pool.total_staked === 'number' && pool.total_staked > 0){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    apy = (pool.total_earned / pool.total_staked) * 100; // lifetime demo %
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // Paint values
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const setOrHide = (id, val, fmt=(x)=>x)=> {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const el = document.getElementById(id);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const wrap = el?.closest('.gw-pill');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (!el || !wrap) return;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (val==null || Number.isNaN(val)) { wrap.style.display='none'; return; }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    el.textContent = fmt(val);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  setOrHide('pill-apy-val', apy, (v)=> (v>=100? v.toFixed(0): v>=10? v.toFixed(1): v.toFixed(2)) + '%');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  setOrHide('pill-lock-val', lock, (v)=> v + ' days');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  setOrHide('pill-points-val', pts,  (v)=> v.toLocaleString('en-AU'));
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // If at least one pill visible, unhide the row
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const visible = [...document.querySelectorAll('#gw-pills .gw-pill')].some(p=>p.style.display!=='none');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  if (visible) pills.hidden = false;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // Wire Tokenomics button to open modal (inserted by Module B)
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const btn = document.getElementById('pill-tokenomics');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  if (btn) btn.addEventListener('click', ()=> {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const modal = document.getElementById('gw-tokenomics-modal');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (modal) modal.showModal();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  });
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+})();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<!-- /GWAVE PILLS MODULE -->
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<!doctype html>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<html lang="en">
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<head>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<meta charset="utf-8" />
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<title>GoodWave Staking — Devnet Live Demo</title>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<style>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  :root { --bg:#0b1220; --panel:#0f1830; --text:#e7eeff; --muted:#8aa1c7; --accent:#3b82f6; }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial;}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .wrap{max-width:1000px;margin:42px auto;padding:0 20px;}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  h1{font-weight:800;letter-spacing:.3px;margin:0 0 12px;}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 18px;}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .card{background:var(--panel);border-radius:14px;padding:16px 18px;box-shadow:0 2px 18px rgba(0,0,0,.25)}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .k{font-size:13px;color:var(--muted);margin-bottom:6px}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .v{font-size:22px;font-weight:750}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .live{margin:8px 0 18px;font-size:13px;color:#86efac}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .legend{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:10px 0 6px}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .dot{width:10px;height:10px;border-radius:50%}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .row{display:flex;align-items:center;gap:10px}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  canvas{background:#0a1327;border-radius:14px}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  a{color:#9cc2ff;text-decoration:none}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .muted{color:var(--muted)}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</style>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</head>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<body>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <div class="wrap">
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <h1>🌊 GoodWave Staking — Devnet Live Demo</h1>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <div class="kpis">
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      <div class="card"><div class="k">Total Staked</div><div class="v" id="kpi-staked">— GWAVE</div></div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      <div class="card"><div class="k">Total Earned</div><div class="v" id="kpi-earned">— GWAVE</div></div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      <div class="card"><div class="k">Total Fees Earned</div><div class="v" id="kpi-fees">— GWAVE</div></div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    </div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <div class="live" id="kpi-live">LIVE • waiting for data…</div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <div class="legend">
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      <div class="row"><div class="dot" style="background:#60a5fa"></div><span>Staked</span></div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      <div class="row"><div class="dot" style="background:#34d399"></div><span>Earned</span></div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      <div class="row"><div class="dot" style="background:#f59e0b"></div><span>Fees (cumulative)</span></div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    </div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <div class="card"><canvas id="gw-chart" height="120"></canvas></div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    <p class="muted" style="margin-top:14px">
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      Updates every ~60s from <code>docs/data/index.json</code> and <code>docs/data/pool.json</code>.
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      Source: <a href="./">repo</a>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    </p>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  </div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 const fmt = n => Number(n ?? 0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:6});
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 const $ = sel => document.querySelector(sel);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 const cacheBust = () => `?ts=${Date.now()}`;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 async function jget(path){ const r = await fetch(`data/${path}${cacheBust()}`, {cache:'no-store'}); if(!r.ok) throw new Error(path+': '+r.status); return r.json(); }
 
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 let chart;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 function ensureChart(labels, staked, earned, fees){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   const ctx = document.getElementById('gw-chart').getContext('2d');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   if (chart) { chart.data.labels = labels; chart.data.datasets[0].data = staked; chart.data.datasets[1].data = earned; chart.data.datasets[2].data = fees; chart.update(); return; }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   chart = new Chart(ctx,{
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     type:'line',
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     data:{ labels, datasets:[
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       { label:'Staked', data:staked, borderColor:'#60a5fa', backgroundColor:'rgba(96,165,250,.2)', tension:.25, fill:false },
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       { label:'Earned', data:earned, borderColor:'#34d399', backgroundColor:'rgba(52,211,153,.2)', tension:.25, fill:false },
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       { label:'Fees',   data:fees,   borderColor:'#f59e0b', backgroundColor:'rgba(245,158,11,.2)', tension:.25, fill:false },
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     ]},
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     options:{
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       responsive:true,
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       animation:false,
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       plugins:{ legend:{display:false}},
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       scales:{
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
         x:{ ticks:{ color:'#8aa1c7' }, grid:{ color:'rgba(255,255,255,.06)'} },
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
         y:{ ticks:{ color:'#8aa1c7' }, grid:{ color:'rgba(255,255,255,.06)'} }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
       }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   });
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 }
 
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 function age(tsIso){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   const now = Date.now(), then = Date.parse(tsIso||Date.now());
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   const s = Math.max(0,Math.round((now-then)/1000));
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   return s + 's ago';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 }
 
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 async function refresh(){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   try{
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     // pool.json has the freshest KPIs
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     const pool = await jget('pool.json');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     $('#kpi-staked').textContent = `${fmt(pool.total_staked)} GWAVE`;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     $('#kpi-earned').textContent = `${fmt(pool.total_earned)} GWAVE`;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     $('#kpi-fees').textContent   = `${fmt(pool.fees_total)} GWAVE`;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     $('#kpi-live').textContent   = `LIVE • updated ${age(pool.ts)}`;
 
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     // index.json for historical lines
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     const idx = await jget('index.json');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     const points = Array.isArray(idx.points) ? idx.points : [];
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     const labels = points.map((p,i)=> p.ts || i+1);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     const staked = points.map(p => Number(p.total_staked||0));
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     const earned = points.map(p => Number(p.total_earned||0));
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     const fees   = points.map((_,i)=> Number(idx.fees_total||0)); // draw as flat/cumulative
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     ensureChart(labels, staked, earned, fees);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   }catch(e){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     $('#kpi-live').textContent = 'Waiting for data… (auto-retrying)';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
     console.error(e);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
   }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 refresh();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 setInterval(refresh, 60000);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<!-- GWAVE LIVE PULSE MODULE (drop-in, idempotent) -->
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<style>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-livebar {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    display:flex; align-items:center; gap:.75rem;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    padding:.5rem .75rem; margin:.75rem 0 1rem 0;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    border-radius:12px; background:#0b1220; color:#d7e3ff;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    border:1px solid rgba(255,255,255,.08);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    font: 500 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-livebar .dot {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    width:10px; height:10px; border-radius:50%;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    background:#22c55e; /* default online */
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    box-shadow:0 0 0 0 rgba(34,197,94,.7);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    animation: pulse 1.6s infinite;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-livebar.offline .dot { background:#ef4444; box-shadow:0 0 0 0 rgba(239,68,68,.6); }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-livebar.stale   .dot { background:#f59e0b; box-shadow:0 0 0 0 rgba(245,158,11,.6); }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  @keyframes pulse {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    0%   { box-shadow:0 0 0 0 rgba(34,197,94,.7) }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    70%  { box-shadow:0 0 0 10px rgba(34,197,94,0) }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    100% { box-shadow:0 0 0 0 rgba(34,197,94,0) }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-livebar.offline @keyframes pulse { /* same timing; color driven by class */ }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-livebar .label { letter-spacing:.02em; }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  .gwave-livebar .time  { opacity:.85 }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</style>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<div id="gwave-livebar" class="gwave-livebar" role="status" aria-live="polite">
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <span class="dot" aria-hidden="true"></span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <span class="label">LIVE</span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  <span class="time">— Updated: <span id="gwave-updated">loading…</span></span>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</div>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+(function(){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const tz = 'Australia/Sydney';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const livebar = document.getElementById('gwave-livebar');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const upEl    = document.getElementById('gwave-updated');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // Insert right under the first H1 if possible (keeps the DOM tidy)
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  try {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const h1 = document.querySelector('h1');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (h1 && livebar && livebar.parentElement !== h1.parentElement) {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      h1.insertAdjacentElement('afterend', livebar);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  } catch {}
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const formatAU = (ts) => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const d = (typeof ts === 'number') ? new Date(ts*1000) : new Date(ts);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (isNaN(d.getTime())) return '—';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    return d.toLocaleString('en-AU', {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      timeZone: tz, hour12: false,
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      year:'numeric', month:'short', day:'2-digit',
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      hour:'2-digit', minute:'2-digit', second:'2-digit'
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    });
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const ageClass = (updatedMs) => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (!updatedMs) return 'offline';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const age = Date.now() - updatedMs;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (age > 5 * 60 * 1000) return 'offline'; // >5m = offline
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (age > 90 * 1000)     return 'stale';   // >90s = stale
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    return 'online';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  // Prefer GH Pages mirror (relative), then fall back to local API
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const REL = 'data/pool.json';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const LOCAL = 'http://127.0.0.1:5199/pool.json';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const fetchWithFallback = async () => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const tryOne = (url) => fetch(url + (url.includes('?')?'&':'?') + '_cb=' + Date.now(), {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      cache: 'no-store'
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    }).then(r => r.ok ? r.json() : Promise.reject(new Error(r.status)));
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    try {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      try {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+        return await tryOne(REL);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      } catch {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+        return await tryOne(LOCAL);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    } catch (e) {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      return null;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const update = async () => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const data = await fetchWithFallback();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (!data) {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      livebar.classList.remove('online','stale'); livebar.classList.add('offline');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      upEl.textContent = 'connection error';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      return;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+    }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    // Common fields: prefer .updated, else .timestamp, else now
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const updated =
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      (data.updated && (typeof data.updated === 'number' || typeof data.updated === 'string'))
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+        ? data.updated
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+        : (data.timestamp || Date.now());
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const updatedMs = (typeof updated === 'number' && updated < 2e12) ? updated*1000 : Number(updated);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    // Set label
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    upEl.textContent = formatAU(updatedMs);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    // Status classes
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    livebar.classList.remove('online','stale','offline');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    livebar.classList.add(ageClass(updatedMs));
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  update();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  setInterval(update, 30000); // 30s refresh
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+})();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<!-- /GWAVE LIVE PULSE MODULE -->
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+<script id="kpi-live-updater">
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+(function(){
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const tz = 'Australia/Sydney';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const el = document.getElementById('kpi-live');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  if (!el) return;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const formatAU = (ts) => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const d = (typeof ts === 'number') ? new Date(ts*1000) : new Date(ts);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (isNaN(d.getTime())) return '—';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    return d.toLocaleString('en-AU',{
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      timeZone: tz, hour12: false, year:'numeric', month:'short', day:'2-digit',
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      hour:'2-digit', minute:'2-digit', second:'2-digit'
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    });
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const ageClass = (updatedMs) => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (!updatedMs) return 'offline';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const age = Date.now() - updatedMs;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (age > 5*60*1000) return 'offline';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (age > 90*1000)   return 'stale';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    return 'online';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const REL='data/pool.json', LOCAL='http://127.0.0.1:5199/pool.json';
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const fetchWithFallback = async () => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const tryOne = (u)=>fetch(u+(u.includes('?')?'&':'?')+'_cb='+Date.now(),{cache:'no-store'})
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+      .then(r=>r.ok?r.json():Promise.reject(new Error(r.status)));
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    try { try { return await tryOne(REL); } catch { return await tryOne(LOCAL); } }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    catch { return null; }
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const paint = (cls, text) => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    el.classList.remove('online','stale','offline');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    el.classList.add(cls);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    el.textContent = text;
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  const tick = async () => {
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const data = await fetchWithFallback();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    if (!data) return paint('offline','LIVE • connection error');
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const updated = (data.updated ?? data.timestamp ?? Date.now());
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const ms = (typeof updated === 'number' && updated < 2e12) ? updated*1000 : Number(updated);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    const cls = ageClass(ms);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+    paint(cls, `LIVE • Updated: ${formatAU(ms)}`);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  };
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  tick();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+  setInterval(tick, 30000);
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+})();
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+</script>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
 </script>
 </body>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
 </html>
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
+
+<script>
+(function(){
+  // Ensure ESC closes dialog
+  const d = document.getElementById('gw-tokenomics-modal');
+  if (!d) return;
+  d.addEventListener('cancel', (e)=>{ e.preventDefault(); d.close(); });
+})();
+</script>
+
