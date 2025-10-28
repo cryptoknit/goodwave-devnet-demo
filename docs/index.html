@@ -226,62 +226,18 @@ setInterval(refresh, 60000);
 })();
 </script>
 <!-- /GWAVE LIVE PULSE MODULE -->
-</body>
-</html>
-<!-- GWAVE LIVE PULSE MODULE (drop-in, idempotent) -->
-<style>
-  .gwave-livebar {
-    display:flex; align-items:center; gap:.75rem;
-    padding:.5rem .75rem; margin:.75rem 0 1rem 0;
-    border-radius:12px; background:#0b1220; color:#d7e3ff;
-    border:1px solid rgba(255,255,255,.08);
-    font: 500 14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  }
-  .gwave-livebar .dot {
-    width:10px; height:10px; border-radius:50%;
-    background:#22c55e; /* default online */
-    box-shadow:0 0 0 0 rgba(34,197,94,.7);
-    animation: pulse 1.6s infinite;
-  }
-  .gwave-livebar.offline .dot { background:#ef4444; box-shadow:0 0 0 0 rgba(239,68,68,.6); }
-  .gwave-livebar.stale   .dot { background:#f59e0b; box-shadow:0 0 0 0 rgba(245,158,11,.6); }
 
-  @keyframes pulse {
-    0%   { box-shadow:0 0 0 0 rgba(34,197,94,.7) }
-    70%  { box-shadow:0 0 0 10px rgba(34,197,94,0) }
-    100% { box-shadow:0 0 0 0 rgba(34,197,94,0) }
-  }
-  .gwave-livebar.offline @keyframes pulse { /* same timing; color driven by class */ }
-  .gwave-livebar .label { letter-spacing:.02em; }
-  .gwave-livebar .time  { opacity:.85 }
-</style>
-
-<div id="gwave-livebar" class="gwave-livebar" role="status" aria-live="polite">
-  <span class="dot" aria-hidden="true"></span>
-  <span class="label">LIVE</span>
-  <span class="time">— Updated: <span id="gwave-updated">loading…</span></span>
-</div>
-
-<script>
+<script id="kpi-live-updater">
 (function(){
   const tz = 'Australia/Sydney';
-  const livebar = document.getElementById('gwave-livebar');
-  const upEl    = document.getElementById('gwave-updated');
-
-  // Insert right under the first H1 if possible (keeps the DOM tidy)
-  try {
-    const h1 = document.querySelector('h1');
-    if (h1 && livebar && livebar.parentElement !== h1.parentElement) {
-      h1.insertAdjacentElement('afterend', livebar);
-    }
-  } catch {}
+  const el = document.getElementById('kpi-live');
+  if (!el) return;
 
   const formatAU = (ts) => {
     const d = (typeof ts === 'number') ? new Date(ts*1000) : new Date(ts);
     if (isNaN(d.getTime())) return '—';
-    return d.toLocaleString('en-AU', {
-      timeZone: tz, hour12: false,
-      year:'numeric', month:'short', day:'2-digit',
+    return d.toLocaleString('en-AU',{
+      timeZone: tz, hour12: false, year:'numeric', month:'short', day:'2-digit',
       hour:'2-digit', minute:'2-digit', second:'2-digit'
     });
   };
@@ -289,58 +245,38 @@ setInterval(refresh, 60000);
   const ageClass = (updatedMs) => {
     if (!updatedMs) return 'offline';
     const age = Date.now() - updatedMs;
-    if (age > 5 * 60 * 1000) return 'offline'; // >5m = offline
-    if (age > 90 * 1000)     return 'stale';   // >90s = stale
+    if (age > 5*60*1000) return 'offline';
+    if (age > 90*1000)   return 'stale';
     return 'online';
   };
 
-  // Prefer GH Pages mirror (relative), then fall back to local API
-  const REL = 'data/pool.json';
-  const LOCAL = 'http://127.0.0.1:5199/pool.json';
-
+  const REL='data/pool.json', LOCAL='http://127.0.0.1:5199/pool.json';
   const fetchWithFallback = async () => {
-    const tryOne = (url) => fetch(url + (url.includes('?')?'&':'?') + '_cb=' + Date.now(), {
-      cache: 'no-store'
-    }).then(r => r.ok ? r.json() : Promise.reject(new Error(r.status)));
-
-    try {
-      try {
-        return await tryOne(REL);
-      } catch {
-        return await tryOne(LOCAL);
-      }
-    } catch (e) {
-      return null;
-    }
+    const tryOne = (u)=>fetch(u+(u.includes('?')?'&':'?')+'_cb='+Date.now(),{cache:'no-store'})
+      .then(r=>r.ok?r.json():Promise.reject(new Error(r.status)));
+    try { try { return await tryOne(REL); } catch { return await tryOne(LOCAL); } }
+    catch { return null; }
   };
 
-  const update = async () => {
+  const paint = (cls, text) => {
+    el.classList.remove('online','stale','offline');
+    el.classList.add(cls);
+    el.textContent = text;
+  };
+
+  const tick = async () => {
     const data = await fetchWithFallback();
-
-    if (!data) {
-      livebar.classList.remove('online','stale'); livebar.classList.add('offline');
-      upEl.textContent = 'connection error';
-      return;
-    }
-
-    // Common fields: prefer .updated, else .timestamp, else now
-    const updated =
-      (data.updated && (typeof data.updated === 'number' || typeof data.updated === 'string'))
-        ? data.updated
-        : (data.timestamp || Date.now());
-
-    const updatedMs = (typeof updated === 'number' && updated < 2e12) ? updated*1000 : Number(updated);
-
-    // Set label
-    upEl.textContent = formatAU(updatedMs);
-
-    // Status classes
-    livebar.classList.remove('online','stale','offline');
-    livebar.classList.add(ageClass(updatedMs));
+    if (!data) return paint('offline','LIVE • connection error');
+    const updated = (data.updated ?? data.timestamp ?? Date.now());
+    const ms = (typeof updated === 'number' && updated < 2e12) ? updated*1000 : Number(updated);
+    const cls = ageClass(ms);
+    paint(cls, `LIVE • Updated: ${formatAU(ms)}`);
   };
 
-  update();
-  setInterval(update, 30000); // 30s refresh
+  tick();
+  setInterval(tick, 30000);
 })();
 </script>
-<!-- /GWAVE LIVE PULSE MODULE -->
+</body>
+</html>
+
