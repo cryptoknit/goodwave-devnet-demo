@@ -1,0 +1,1179 @@
+{
+  "points": [
+    {
+      "ts": "2025-10-28T04:19:57Z",
+      "total_staked": 850,
+      "total_earned": 0
+    },
+    {
+      "ts": "2025-10-28T04:20:27Z",
+      "total_staked": 850,
+      "total_earned": 0
+    },
+    {
+      "ts": "2025-10-28T04:20:57Z",
+      "total_staked": 850,
+      "total_earned": 0
+    },
+    {
+      "ts": "2025-10-28T04:21:27Z",
+      "total_staked": 850,
+      "total_earned": 0
+    },
+    {
+      "ts": "2025-10-28T04:21:57Z",
+      "total_staked": 850,
+      "total_earned": 0
+    },
+    {
+      "ts": "2025-10-28T04:22:27Z",
+      "total_staked": 850,
+      "total_earned": 0
+    },
+    {
+      "ts": "2025-10-28T04:22:57Z",
+      "total_staked": 850,
+      "total_earned": 0
+    },
+    {
+      "ts": "2025-10-28T04:27:17Z",
+      "total_staked": 850,
+      "total_earned": 0.27880000000000005
+    },
+    {
+      "ts": "2025-10-28T04:27:47Z",
+      "total_staked": 850,
+      "total_earned": 0.5576000000000001
+    },
+    {
+      "ts": "2025-10-28T04:28:17Z",
+      "total_staked": 850,
+      "total_earned": 0.8364
+    },
+    {
+      "ts": "2025-10-28T04:28:47Z",
+      "total_staked": 850,
+      "total_earned": 1.1152000000000002
+    },
+    {
+      "ts": "2025-10-28T04:29:17Z",
+      "total_staked": 850,
+      "total_earned": 1.3940000000000001
+    },
+    {
+      "ts": "2025-10-28T04:29:47Z",
+      "total_staked": 850,
+      "total_earned": 1.6728
+    },
+    {
+      "ts": "2025-10-28T04:30:17Z",
+      "total_staked": 850,
+      "total_earned": 1.9516000000000002
+    },
+    {
+      "ts": "2025-10-28T04:30:47Z",
+      "total_staked": 850,
+      "total_earned": 2.2304000000000004
+    },
+    {
+      "ts": "2025-10-28T04:31:17Z",
+      "total_staked": 850,
+      "total_earned": 2.5092
+    },
+    {
+      "ts": "2025-10-28T04:31:47Z",
+      "total_staked": 850,
+      "total_earned": 2.788
+    },
+    {
+      "ts": "2025-10-28T04:32:18Z",
+      "total_staked": 850,
+      "total_earned": 3.0667999999999997
+    },
+    {
+      "ts": "2025-10-28T04:32:48Z",
+      "total_staked": 850,
+      "total_earned": 3.3455999999999997
+    },
+    {
+      "ts": "2025-10-28T04:33:18Z",
+      "total_staked": 850,
+      "total_earned": 3.6243999999999996
+    },
+    {
+      "ts": "2025-10-28T04:33:48Z",
+      "total_staked": 850,
+      "total_earned": 3.9032
+    },
+    {
+      "ts": "2025-10-28T04:34:18Z",
+      "total_staked": 850,
+      "total_earned": 4.182
+    },
+    {
+      "ts": "2025-10-28T04:34:48Z",
+      "total_staked": 850,
+      "total_earned": 4.460800000000001
+    },
+    {
+      "ts": "2025-10-28T04:35:18Z",
+      "total_staked": 850,
+      "total_earned": 4.7396
+    },
+    {
+      "ts": "2025-10-28T04:35:48Z",
+      "total_staked": 850,
+      "total_earned": 5.018400000000001
+    },
+    {
+      "ts": "2025-10-28T04:36:18Z",
+      "total_staked": 850,
+      "total_earned": 5.297200000000001
+    },
+    {
+      "ts": "2025-10-28T04:36:48Z",
+      "total_staked": 850,
+      "total_earned": 5.576000000000001
+    },
+    {
+      "ts": "2025-10-28T04:37:18Z",
+      "total_staked": 850,
+      "total_earned": 5.854800000000002
+    },
+    {
+      "ts": "2025-10-28T04:37:48Z",
+      "total_staked": 850,
+      "total_earned": 6.133600000000001
+    },
+    {
+      "ts": "2025-10-28T04:38:18Z",
+      "total_staked": 850,
+      "total_earned": 6.412400000000002
+    },
+    {
+      "ts": "2025-10-28T04:38:48Z",
+      "total_staked": 850,
+      "total_earned": 6.691200000000002
+    },
+    {
+      "ts": "2025-10-28T04:39:18Z",
+      "total_staked": 850,
+      "total_earned": 6.970000000000002
+    },
+    {
+      "ts": "2025-10-28T04:39:48Z",
+      "total_staked": 850,
+      "total_earned": 7.248800000000003
+    },
+    {
+      "ts": "2025-10-28T04:40:18Z",
+      "total_staked": 850,
+      "total_earned": 7.527600000000001
+    },
+    {
+      "ts": "2025-10-28T04:40:48Z",
+      "total_staked": 850,
+      "total_earned": 7.806400000000002
+    },
+    {
+      "ts": "2025-10-28T04:41:18Z",
+      "total_staked": 850,
+      "total_earned": 8.0852
+    },
+    {
+      "ts": "2025-10-28T04:41:49Z",
+      "total_staked": 850,
+      "total_earned": 8.364
+    },
+    {
+      "ts": "2025-10-28T04:42:19Z",
+      "total_staked": 850,
+      "total_earned": 8.642800000000001
+    },
+    {
+      "ts": "2025-10-28T04:42:49Z",
+      "total_staked": 850,
+      "total_earned": 8.9216
+    },
+    {
+      "ts": "2025-10-28T04:43:19Z",
+      "total_staked": 850,
+      "total_earned": 9.200399999999998
+    },
+    {
+      "ts": "2025-10-28T04:43:49Z",
+      "total_staked": 850,
+      "total_earned": 9.479199999999999
+    },
+    {
+      "ts": "2025-10-28T04:44:19Z",
+      "total_staked": 850,
+      "total_earned": 9.758
+    },
+    {
+      "ts": "2025-10-28T04:44:49Z",
+      "total_staked": 850,
+      "total_earned": 10.036799999999998
+    },
+    {
+      "ts": "2025-10-28T04:45:19Z",
+      "total_staked": 850,
+      "total_earned": 10.315599999999996
+    },
+    {
+      "ts": "2025-10-28T04:45:49Z",
+      "total_staked": 850,
+      "total_earned": 10.594399999999997
+    },
+    {
+      "ts": "2025-10-28T04:46:19Z",
+      "total_staked": 850,
+      "total_earned": 10.873199999999997
+    },
+    {
+      "ts": "2025-10-28T04:46:49Z",
+      "total_staked": 850,
+      "total_earned": 11.151999999999996
+    },
+    {
+      "ts": "2025-10-28T04:47:19Z",
+      "total_staked": 850,
+      "total_earned": 11.430799999999994
+    },
+    {
+      "ts": "2025-10-28T04:47:49Z",
+      "total_staked": 850,
+      "total_earned": 11.709599999999995
+    },
+    {
+      "ts": "2025-10-28T04:48:19Z",
+      "total_staked": 850,
+      "total_earned": 11.988399999999995
+    },
+    {
+      "ts": "2025-10-28T04:48:49Z",
+      "total_staked": 850,
+      "total_earned": 12.267199999999994
+    },
+    {
+      "ts": "2025-10-28T04:49:19Z",
+      "total_staked": 850,
+      "total_earned": 12.545999999999992
+    },
+    {
+      "ts": "2025-10-28T04:49:49Z",
+      "total_staked": 850,
+      "total_earned": 12.824799999999993
+    },
+    {
+      "ts": "2025-10-28T04:50:19Z",
+      "total_staked": 850,
+      "total_earned": 13.103599999999993
+    },
+    {
+      "ts": "2025-10-28T04:50:49Z",
+      "total_staked": 850,
+      "total_earned": 13.382399999999992
+    },
+    {
+      "ts": "2025-10-28T04:51:20Z",
+      "total_staked": 850,
+      "total_earned": 13.66119999999999
+    },
+    {
+      "ts": "2025-10-28T04:51:50Z",
+      "total_staked": 850,
+      "total_earned": 13.93999999999999
+    },
+    {
+      "ts": "2025-10-28T04:52:20Z",
+      "total_staked": 850,
+      "total_earned": 14.218799999999991
+    },
+    {
+      "ts": "2025-10-28T04:52:50Z",
+      "total_staked": 850,
+      "total_earned": 14.49759999999999
+    },
+    {
+      "ts": "2025-10-28T04:53:20Z",
+      "total_staked": 850,
+      "total_earned": 14.776399999999988
+    },
+    {
+      "ts": "2025-10-28T04:53:50Z",
+      "total_staked": 850,
+      "total_earned": 15.055199999999989
+    },
+    {
+      "ts": "2025-10-28T04:54:20Z",
+      "total_staked": 850,
+      "total_earned": 15.333999999999989
+    },
+    {
+      "ts": "2025-10-28T04:54:50Z",
+      "total_staked": 850,
+      "total_earned": 15.612799999999988
+    },
+    {
+      "ts": "2025-10-28T04:55:20Z",
+      "total_staked": 850,
+      "total_earned": 15.891599999999986
+    },
+    {
+      "ts": "2025-10-28T04:55:50Z",
+      "total_staked": 850,
+      "total_earned": 16.170399999999987
+    },
+    {
+      "ts": "2025-10-28T04:56:20Z",
+      "total_staked": 850,
+      "total_earned": 16.449199999999987
+    },
+    {
+      "ts": "2025-10-28T04:56:50Z",
+      "total_staked": 850,
+      "total_earned": 16.727999999999987
+    },
+    {
+      "ts": "2025-10-28T05:12:05Z",
+      "total_staked": 850,
+      "total_earned": 17.006799999999984
+    },
+    {
+      "ts": "2025-10-28T05:12:35Z",
+      "total_staked": 850,
+      "total_earned": 17.285599999999985
+    },
+    {
+      "ts": "2025-10-28T05:13:05Z",
+      "total_staked": 850,
+      "total_earned": 17.564399999999985
+    },
+    {
+      "ts": "2025-10-28T05:13:35Z",
+      "total_staked": 850,
+      "total_earned": 17.84319999999998
+    },
+    {
+      "ts": "2025-10-28T05:14:05Z",
+      "total_staked": 850,
+      "total_earned": 18.121999999999982
+    },
+    {
+      "ts": "2025-10-28T05:14:35Z",
+      "total_staked": 850,
+      "total_earned": 18.400799999999983
+    },
+    {
+      "ts": "2025-10-28T05:17:13Z",
+      "total_staked": 850,
+      "total_earned": 18.679599999999983
+    },
+    {
+      "ts": "2025-10-28T05:17:41Z",
+      "total_staked": 850,
+      "total_earned": 18.958399999999983
+    },
+    {
+      "ts": "2025-10-28T05:17:43Z",
+      "total_staked": 850,
+      "total_earned": 19.23719999999998
+    },
+    {
+      "ts": "2025-10-28T05:18:11Z",
+      "total_staked": 850,
+      "total_earned": 19.51599999999998
+    },
+    {
+      "ts": "2025-10-28T05:18:13Z",
+      "total_staked": 850,
+      "total_earned": 19.79479999999998
+    },
+    {
+      "ts": "2025-10-28T05:18:41Z",
+      "total_staked": 850,
+      "total_earned": 20.073599999999978
+    },
+    {
+      "ts": "2025-10-28T05:18:43Z",
+      "total_staked": 850,
+      "total_earned": 20.352399999999978
+    },
+    {
+      "ts": "2025-10-28T05:19:11Z",
+      "total_staked": 850,
+      "total_earned": 20.63119999999998
+    },
+    {
+      "ts": "2025-10-28T05:19:13Z",
+      "total_staked": 850,
+      "total_earned": 20.90999999999998
+    },
+    {
+      "ts": "2025-10-28T05:19:41Z",
+      "total_staked": 850,
+      "total_earned": 21.18879999999998
+    },
+    {
+      "ts": "2025-10-28T05:19:43Z",
+      "total_staked": 850,
+      "total_earned": 21.467599999999976
+    },
+    {
+      "ts": "2025-10-28T05:20:11Z",
+      "total_staked": 850,
+      "total_earned": 21.746399999999976
+    },
+    {
+      "ts": "2025-10-28T05:20:13Z",
+      "total_staked": 850,
+      "total_earned": 22.025199999999977
+    },
+    {
+      "ts": "2025-10-28T05:20:41Z",
+      "total_staked": 850,
+      "total_earned": 22.303999999999974
+    },
+    {
+      "ts": "2025-10-28T05:20:43Z",
+      "total_staked": 850,
+      "total_earned": 22.582799999999974
+    },
+    {
+      "ts": "2025-10-28T05:21:11Z",
+      "total_staked": 850,
+      "total_earned": 22.861599999999974
+    },
+    {
+      "ts": "2025-10-28T05:21:13Z",
+      "total_staked": 850,
+      "total_earned": 23.140399999999975
+    },
+    {
+      "ts": "2025-10-28T05:21:41Z",
+      "total_staked": 850,
+      "total_earned": 23.419199999999975
+    },
+    {
+      "ts": "2025-10-28T05:21:43Z",
+      "total_staked": 850,
+      "total_earned": 23.697999999999972
+    },
+    {
+      "ts": "2025-10-28T05:22:11Z",
+      "total_staked": 850,
+      "total_earned": 23.976799999999972
+    },
+    {
+      "ts": "2025-10-28T05:22:41Z",
+      "total_staked": 850,
+      "total_earned": 24.255599999999973
+    },
+    {
+      "ts": "2025-10-28T05:22:55Z",
+      "total_staked": 850,
+      "total_earned": 24.53439999999997
+    },
+    {
+      "ts": "2025-10-28T05:23:25Z",
+      "total_staked": 850,
+      "total_earned": 24.81319999999997
+    },
+    {
+      "ts": "2025-10-28T05:23:55Z",
+      "total_staked": 850,
+      "total_earned": 25.09199999999997
+    },
+    {
+      "ts": "2025-10-28T05:24:25Z",
+      "total_staked": 850,
+      "total_earned": 25.37079999999997
+    },
+    {
+      "ts": "2025-10-28T05:24:55Z",
+      "total_staked": 850,
+      "total_earned": 25.64959999999997
+    },
+    {
+      "ts": "2025-10-28T05:25:25Z",
+      "total_staked": 850,
+      "total_earned": 25.928399999999968
+    },
+    {
+      "ts": "2025-10-28T05:25:55Z",
+      "total_staked": 850,
+      "total_earned": 26.20719999999997
+    },
+    {
+      "ts": "2025-10-28T05:26:25Z",
+      "total_staked": 850,
+      "total_earned": 26.48599999999997
+    },
+    {
+      "ts": "2025-10-28T05:26:55Z",
+      "total_staked": 850,
+      "total_earned": 26.764799999999966
+    },
+    {
+      "ts": "2025-10-28T05:27:26Z",
+      "total_staked": 850,
+      "total_earned": 27.043599999999966
+    },
+    {
+      "ts": "2025-10-28T05:27:56Z",
+      "total_staked": 850,
+      "total_earned": 27.32239999999997
+    },
+    {
+      "ts": "2025-10-28T05:28:26Z",
+      "total_staked": 850,
+      "total_earned": 27.60119999999997
+    },
+    {
+      "ts": "2025-10-28T05:28:56Z",
+      "total_staked": 850,
+      "total_earned": 27.879999999999974
+    },
+    {
+      "ts": "2025-10-28T05:29:26Z",
+      "total_staked": 850,
+      "total_earned": 28.158799999999975
+    },
+    {
+      "ts": "2025-10-28T05:29:56Z",
+      "total_staked": 850,
+      "total_earned": 28.43759999999998
+    },
+    {
+      "ts": "2025-10-28T05:30:26Z",
+      "total_staked": 850,
+      "total_earned": 28.71639999999998
+    },
+    {
+      "ts": "2025-10-28T05:30:56Z",
+      "total_staked": 850,
+      "total_earned": 28.995199999999983
+    },
+    {
+      "ts": "2025-10-28T05:31:26Z",
+      "total_staked": 850,
+      "total_earned": 29.273999999999983
+    },
+    {
+      "ts": "2025-10-28T05:31:56Z",
+      "total_staked": 850,
+      "total_earned": 29.552799999999987
+    },
+    {
+      "ts": "2025-10-28T05:32:26Z",
+      "total_staked": 850,
+      "total_earned": 29.831599999999987
+    },
+    {
+      "ts": "2025-10-28T05:32:56Z",
+      "total_staked": 850,
+      "total_earned": 30.11039999999999
+    },
+    {
+      "ts": "2025-10-28T05:33:26Z",
+      "total_staked": 850,
+      "total_earned": 30.38919999999999
+    },
+    {
+      "ts": "2025-10-28T05:33:56Z",
+      "total_staked": 850,
+      "total_earned": 30.667999999999996
+    },
+    {
+      "ts": "2025-10-28T05:34:26Z",
+      "total_staked": 850,
+      "total_earned": 30.946799999999996
+    },
+    {
+      "ts": "2025-10-28T05:34:56Z",
+      "total_staked": 850,
+      "total_earned": 31.2256
+    },
+    {
+      "ts": "2025-10-28T05:35:26Z",
+      "total_staked": 850,
+      "total_earned": 31.5044
+    },
+    {
+      "ts": "2025-10-28T05:35:56Z",
+      "total_staked": 850,
+      "total_earned": 31.783200000000004
+    },
+    {
+      "ts": "2025-10-28T05:36:26Z",
+      "total_staked": 850,
+      "total_earned": 32.062000000000005
+    },
+    {
+      "ts": "2025-10-28T05:36:56Z",
+      "total_staked": 850,
+      "total_earned": 32.34080000000001
+    },
+    {
+      "ts": "2025-10-28T05:37:27Z",
+      "total_staked": 850,
+      "total_earned": 32.619600000000005
+    },
+    {
+      "ts": "2025-10-28T05:37:57Z",
+      "total_staked": 850,
+      "total_earned": 32.89840000000001
+    },
+    {
+      "ts": "2025-10-28T05:38:27Z",
+      "total_staked": 850,
+      "total_earned": 33.17720000000001
+    },
+    {
+      "ts": "2025-10-28T05:38:57Z",
+      "total_staked": 850,
+      "total_earned": 33.45600000000002
+    },
+    {
+      "ts": "2025-10-28T05:39:27Z",
+      "total_staked": 850,
+      "total_earned": 33.73480000000002
+    },
+    {
+      "ts": "2025-10-28T05:39:57Z",
+      "total_staked": 850,
+      "total_earned": 34.013600000000025
+    },
+    {
+      "ts": "2025-10-28T05:40:27Z",
+      "total_staked": 850,
+      "total_earned": 34.29240000000002
+    },
+    {
+      "ts": "2025-10-28T05:40:57Z",
+      "total_staked": 850,
+      "total_earned": 34.571200000000026
+    },
+    {
+      "ts": "2025-10-28T05:41:27Z",
+      "total_staked": 850,
+      "total_earned": 34.85000000000002
+    },
+    {
+      "ts": "2025-10-28T05:41:57Z",
+      "total_staked": 850,
+      "total_earned": 35.12880000000003
+    },
+    {
+      "ts": "2025-10-28T05:42:27Z",
+      "total_staked": 850,
+      "total_earned": 35.40760000000003
+    },
+    {
+      "ts": "2025-10-28T05:42:57Z",
+      "total_staked": 850,
+      "total_earned": 35.686400000000035
+    },
+    {
+      "ts": "2025-10-28T05:43:27Z",
+      "total_staked": 850,
+      "total_earned": 35.96520000000004
+    },
+    {
+      "ts": "2025-10-28T05:43:57Z",
+      "total_staked": 850,
+      "total_earned": 36.24400000000004
+    },
+    {
+      "ts": "2025-10-28T05:44:27Z",
+      "total_staked": 850,
+      "total_earned": 36.52280000000004
+    },
+    {
+      "ts": "2025-10-28T05:44:57Z",
+      "total_staked": 850,
+      "total_earned": 36.80160000000004
+    },
+    {
+      "ts": "2025-10-28T05:45:27Z",
+      "total_staked": 850,
+      "total_earned": 37.08040000000004
+    },
+    {
+      "ts": "2025-10-28T05:45:57Z",
+      "total_staked": 850,
+      "total_earned": 37.359200000000044
+    },
+    {
+      "ts": "2025-10-28T05:46:27Z",
+      "total_staked": 850,
+      "total_earned": 37.63800000000005
+    },
+    {
+      "ts": "2025-10-28T05:46:57Z",
+      "total_staked": 850,
+      "total_earned": 37.91680000000005
+    },
+    {
+      "ts": "2025-10-28T05:47:28Z",
+      "total_staked": 850,
+      "total_earned": 38.195600000000056
+    },
+    {
+      "ts": "2025-10-28T05:47:58Z",
+      "total_staked": 850,
+      "total_earned": 38.47440000000006
+    },
+    {
+      "ts": "2025-10-28T05:48:28Z",
+      "total_staked": 850,
+      "total_earned": 38.75320000000006
+    },
+    {
+      "ts": "2025-10-28T05:48:58Z",
+      "total_staked": 850,
+      "total_earned": 39.03200000000006
+    },
+    {
+      "ts": "2025-10-28T05:49:28Z",
+      "total_staked": 850,
+      "total_earned": 39.31080000000006
+    },
+    {
+      "ts": "2025-10-28T05:49:58Z",
+      "total_staked": 850,
+      "total_earned": 39.58960000000006
+    },
+    {
+      "ts": "2025-10-28T05:50:28Z",
+      "total_staked": 850,
+      "total_earned": 39.868400000000065
+    },
+    {
+      "ts": "2025-10-28T05:50:58Z",
+      "total_staked": 850,
+      "total_earned": 40.14720000000007
+    },
+    {
+      "ts": "2025-10-28T05:51:28Z",
+      "total_staked": 850,
+      "total_earned": 40.42600000000007
+    },
+    {
+      "ts": "2025-10-28T05:51:58Z",
+      "total_staked": 850,
+      "total_earned": 40.70480000000008
+    },
+    {
+      "ts": "2025-10-28T05:52:28Z",
+      "total_staked": 850,
+      "total_earned": 40.983600000000074
+    },
+    {
+      "ts": "2025-10-28T05:52:58Z",
+      "total_staked": 850,
+      "total_earned": 41.26240000000008
+    },
+    {
+      "ts": "2025-10-28T05:53:28Z",
+      "total_staked": 850,
+      "total_earned": 41.541200000000075
+    },
+    {
+      "ts": "2025-10-28T05:53:58Z",
+      "total_staked": 850,
+      "total_earned": 41.82000000000008
+    },
+    {
+      "ts": "2025-10-28T05:54:28Z",
+      "total_staked": 850,
+      "total_earned": 42.09880000000008
+    },
+    {
+      "ts": "2025-10-28T05:54:58Z",
+      "total_staked": 850,
+      "total_earned": 42.377600000000086
+    },
+    {
+      "ts": "2025-10-28T05:55:28Z",
+      "total_staked": 850,
+      "total_earned": 42.65640000000009
+    },
+    {
+      "ts": "2025-10-28T05:55:58Z",
+      "total_staked": 850,
+      "total_earned": 42.935200000000094
+    },
+    {
+      "ts": "2025-10-28T05:56:28Z",
+      "total_staked": 850,
+      "total_earned": 43.21400000000009
+    },
+    {
+      "ts": "2025-10-28T05:56:59Z",
+      "total_staked": 850,
+      "total_earned": 43.492800000000095
+    },
+    {
+      "ts": "2025-10-28T05:57:29Z",
+      "total_staked": 850,
+      "total_earned": 43.77160000000009
+    },
+    {
+      "ts": "2025-10-28T05:57:59Z",
+      "total_staked": 850,
+      "total_earned": 44.050400000000096
+    },
+    {
+      "ts": "2025-10-28T05:58:29Z",
+      "total_staked": 850,
+      "total_earned": 44.3292000000001
+    },
+    {
+      "ts": "2025-10-28T05:58:59Z",
+      "total_staked": 850,
+      "total_earned": 44.608000000000104
+    },
+    {
+      "ts": "2025-10-28T05:59:29Z",
+      "total_staked": 850,
+      "total_earned": 44.88680000000011
+    },
+    {
+      "ts": "2025-10-28T05:59:59Z",
+      "total_staked": 850,
+      "total_earned": 45.16560000000011
+    },
+    {
+      "ts": "2025-10-28T06:00:29Z",
+      "total_staked": 850,
+      "total_earned": 45.44440000000011
+    },
+    {
+      "ts": "2025-10-28T06:00:59Z",
+      "total_staked": 850,
+      "total_earned": 45.72320000000011
+    },
+    {
+      "ts": "2025-10-28T06:01:29Z",
+      "total_staked": 850,
+      "total_earned": 46.00200000000011
+    },
+    {
+      "ts": "2025-10-28T06:01:59Z",
+      "total_staked": 850,
+      "total_earned": 46.28080000000011
+    },
+    {
+      "ts": "2025-10-28T06:02:29Z",
+      "total_staked": 850,
+      "total_earned": 46.55960000000012
+    },
+    {
+      "ts": "2025-10-28T06:02:59Z",
+      "total_staked": 850,
+      "total_earned": 46.83840000000012
+    },
+    {
+      "ts": "2025-10-28T06:03:29Z",
+      "total_staked": 850,
+      "total_earned": 47.117200000000125
+    },
+    {
+      "ts": "2025-10-28T06:03:59Z",
+      "total_staked": 850,
+      "total_earned": 47.39600000000013
+    },
+    {
+      "ts": "2025-10-28T06:04:29Z",
+      "total_staked": 850,
+      "total_earned": 47.674800000000126
+    },
+    {
+      "ts": "2025-10-28T06:04:59Z",
+      "total_staked": 850,
+      "total_earned": 47.95360000000013
+    },
+    {
+      "ts": "2025-10-28T06:05:29Z",
+      "total_staked": 850,
+      "total_earned": 48.232400000000126
+    },
+    {
+      "ts": "2025-10-28T06:05:59Z",
+      "total_staked": 850,
+      "total_earned": 48.51120000000013
+    },
+    {
+      "ts": "2025-10-28T06:06:29Z",
+      "total_staked": 850,
+      "total_earned": 48.790000000000134
+    },
+    {
+      "ts": "2025-10-28T06:06:59Z",
+      "total_staked": 850,
+      "total_earned": 49.06880000000014
+    },
+    {
+      "ts": "2025-10-28T06:07:30Z",
+      "total_staked": 850,
+      "total_earned": 49.34760000000014
+    },
+    {
+      "ts": "2025-10-28T06:08:00Z",
+      "total_staked": 850,
+      "total_earned": 49.626400000000146
+    },
+    {
+      "ts": "2025-10-28T06:08:30Z",
+      "total_staked": 850,
+      "total_earned": 49.90520000000014
+    },
+    {
+      "ts": "2025-10-28T06:09:00Z",
+      "total_staked": 850,
+      "total_earned": 50.18400000000015
+    },
+    {
+      "ts": "2025-10-28T06:09:30Z",
+      "total_staked": 850,
+      "total_earned": 50.46280000000014
+    },
+    {
+      "ts": "2025-10-28T06:10:00Z",
+      "total_staked": 850,
+      "total_earned": 50.74160000000015
+    },
+    {
+      "ts": "2025-10-28T06:10:30Z",
+      "total_staked": 850,
+      "total_earned": 51.02040000000015
+    },
+    {
+      "ts": "2025-10-28T06:11:00Z",
+      "total_staked": 850,
+      "total_earned": 51.299200000000155
+    },
+    {
+      "ts": "2025-10-28T06:11:30Z",
+      "total_staked": 850,
+      "total_earned": 51.57800000000016
+    },
+    {
+      "ts": "2025-10-28T06:12:00Z",
+      "total_staked": 850,
+      "total_earned": 51.85680000000016
+    },
+    {
+      "ts": "2025-10-28T06:12:30Z",
+      "total_staked": 850,
+      "total_earned": 52.13560000000016
+    },
+    {
+      "ts": "2025-10-28T06:13:00Z",
+      "total_staked": 850,
+      "total_earned": 52.414400000000164
+    },
+    {
+      "ts": "2025-10-28T06:13:30Z",
+      "total_staked": 850,
+      "total_earned": 52.69320000000016
+    },
+    {
+      "ts": "2025-10-28T06:14:00Z",
+      "total_staked": 850,
+      "total_earned": 52.972000000000165
+    },
+    {
+      "ts": "2025-10-28T06:14:30Z",
+      "total_staked": 850,
+      "total_earned": 53.25080000000017
+    },
+    {
+      "ts": "2025-10-28T06:15:00Z",
+      "total_staked": 850,
+      "total_earned": 53.52960000000017
+    },
+    {
+      "ts": "2025-10-28T06:15:30Z",
+      "total_staked": 850,
+      "total_earned": 53.80840000000018
+    },
+    {
+      "ts": "2025-10-28T06:16:00Z",
+      "total_staked": 850,
+      "total_earned": 54.08720000000018
+    },
+    {
+      "ts": "2025-10-28T06:16:31Z",
+      "total_staked": 850,
+      "total_earned": 54.36600000000018
+    },
+    {
+      "ts": "2025-10-28T06:17:01Z",
+      "total_staked": 850,
+      "total_earned": 54.64480000000018
+    },
+    {
+      "ts": "2025-10-28T06:17:31Z",
+      "total_staked": 850,
+      "total_earned": 54.92360000000018
+    },
+    {
+      "ts": "2025-10-28T06:18:01Z",
+      "total_staked": 850,
+      "total_earned": 55.20240000000018
+    },
+    {
+      "ts": "2025-10-28T06:18:31Z",
+      "total_staked": 850,
+      "total_earned": 55.481200000000186
+    },
+    {
+      "ts": "2025-10-28T06:19:01Z",
+      "total_staked": 850,
+      "total_earned": 55.76000000000019
+    },
+    {
+      "ts": "2025-10-28T06:19:31Z",
+      "total_staked": 850,
+      "total_earned": 56.038800000000194
+    },
+    {
+      "ts": "2025-10-28T06:20:01Z",
+      "total_staked": 850,
+      "total_earned": 56.3176000000002
+    },
+    {
+      "ts": "2025-10-28T06:20:31Z",
+      "total_staked": 850,
+      "total_earned": 56.596400000000195
+    },
+    {
+      "ts": "2025-10-28T06:21:01Z",
+      "total_staked": 850,
+      "total_earned": 56.8752000000002
+    },
+    {
+      "ts": "2025-10-28T06:21:31Z",
+      "total_staked": 850,
+      "total_earned": 57.154000000000195
+    },
+    {
+      "ts": "2025-10-28T06:22:01Z",
+      "total_staked": 850,
+      "total_earned": 57.4328000000002
+    },
+    {
+      "ts": "2025-10-28T06:22:31Z",
+      "total_staked": 850,
+      "total_earned": 57.7116000000002
+    },
+    {
+      "ts": "2025-10-28T06:23:01Z",
+      "total_staked": 850,
+      "total_earned": 57.99040000000021
+    },
+    {
+      "ts": "2025-10-28T06:23:31Z",
+      "total_staked": 850,
+      "total_earned": 58.26920000000021
+    },
+    {
+      "ts": "2025-10-28T06:24:01Z",
+      "total_staked": 850,
+      "total_earned": 58.548000000000215
+    },
+    {
+      "ts": "2025-10-28T06:24:31Z",
+      "total_staked": 850,
+      "total_earned": 58.82680000000021
+    },
+    {
+      "ts": "2025-10-28T06:25:01Z",
+      "total_staked": 850,
+      "total_earned": 59.105600000000216
+    },
+    {
+      "ts": "2025-10-28T06:25:31Z",
+      "total_staked": 850,
+      "total_earned": 59.38440000000021
+    },
+    {
+      "ts": "2025-10-28T06:26:01Z",
+      "total_staked": 850,
+      "total_earned": 59.66320000000022
+    },
+    {
+      "ts": "2025-10-28T06:26:31Z",
+      "total_staked": 850,
+      "total_earned": 59.94200000000022
+    },
+    {
+      "ts": "2025-10-28T06:27:01Z",
+      "total_staked": 850,
+      "total_earned": 60.220800000000224
+    },
+    {
+      "ts": "2025-10-28T06:27:32Z",
+      "total_staked": 850,
+      "total_earned": 60.49960000000023
+    },
+    {
+      "ts": "2025-10-28T06:28:02Z",
+      "total_staked": 850,
+      "total_earned": 60.77840000000023
+    },
+    {
+      "ts": "2025-10-28T06:28:32Z",
+      "total_staked": 850,
+      "total_earned": 61.05720000000023
+    },
+    {
+      "ts": "2025-10-28T06:29:02Z",
+      "total_staked": 850,
+      "total_earned": 61.33600000000023
+    },
+    {
+      "ts": "2025-10-28T06:29:32Z",
+      "total_staked": 850,
+      "total_earned": 61.61480000000023
+    },
+    {
+      "ts": "2025-10-28T06:30:02Z",
+      "total_staked": 850,
+      "total_earned": 61.893600000000234
+    },
+    {
+      "ts": "2025-10-28T06:30:32Z",
+      "total_staked": 850,
+      "total_earned": 62.17240000000024
+    },
+    {
+      "ts": "2025-10-28T06:31:02Z",
+      "total_staked": 850,
+      "total_earned": 62.45120000000024
+    },
+    {
+      "ts": "2025-10-28T06:31:32Z",
+      "total_staked": 850,
+      "total_earned": 62.730000000000246
+    },
+    {
+      "ts": "2025-10-28T06:32:02Z",
+      "total_staked": 850,
+      "total_earned": 63.00880000000025
+    },
+    {
+      "ts": "2025-10-28T06:32:32Z",
+      "total_staked": 850,
+      "total_earned": 63.287600000000246
+    },
+    {
+      "ts": "2025-10-28T06:33:02Z",
+      "total_staked": 850,
+      "total_earned": 63.56640000000025
+    }
+  ]
+}
