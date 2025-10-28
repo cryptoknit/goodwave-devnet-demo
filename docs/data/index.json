@@ -1,1949 +1,1960 @@
 {
   "points": [
     {
-      "ts": "2025-10-28T04:19:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0
     },
     {
-      "ts": "2025-10-28T04:20:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0
     },
     {
-      "ts": "2025-10-28T04:20:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0
     },
     {
-      "ts": "2025-10-28T04:21:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0
     },
     {
-      "ts": "2025-10-28T04:21:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0
     },
     {
-      "ts": "2025-10-28T04:22:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0
     },
     {
-      "ts": "2025-10-28T04:22:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0
     },
     {
-      "ts": "2025-10-28T04:27:17Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0.27880000000000005
     },
     {
-      "ts": "2025-10-28T04:27:47Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0.5576000000000001
     },
     {
-      "ts": "2025-10-28T04:28:17Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 0.8364
     },
     {
-      "ts": "2025-10-28T04:28:47Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 1.1152000000000002
     },
     {
-      "ts": "2025-10-28T04:29:17Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 1.3940000000000001
     },
     {
-      "ts": "2025-10-28T04:29:47Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 1.6728
     },
     {
-      "ts": "2025-10-28T04:30:17Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 1.9516000000000002
     },
     {
-      "ts": "2025-10-28T04:30:47Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 2.2304000000000004
     },
     {
-      "ts": "2025-10-28T04:31:17Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 2.5092
     },
     {
-      "ts": "2025-10-28T04:31:47Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 2.788
     },
     {
-      "ts": "2025-10-28T04:32:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 3.0667999999999997
     },
     {
-      "ts": "2025-10-28T04:32:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 3.3455999999999997
     },
     {
-      "ts": "2025-10-28T04:33:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 3.6243999999999996
     },
     {
-      "ts": "2025-10-28T04:33:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 3.9032
     },
     {
-      "ts": "2025-10-28T04:34:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 4.182
     },
     {
-      "ts": "2025-10-28T04:34:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 4.460800000000001
     },
     {
-      "ts": "2025-10-28T04:35:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 4.7396
     },
     {
-      "ts": "2025-10-28T04:35:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 5.018400000000001
     },
     {
-      "ts": "2025-10-28T04:36:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 5.297200000000001
     },
     {
-      "ts": "2025-10-28T04:36:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 5.576000000000001
     },
     {
-      "ts": "2025-10-28T04:37:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 5.854800000000002
     },
     {
-      "ts": "2025-10-28T04:37:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 6.133600000000001
     },
     {
-      "ts": "2025-10-28T04:38:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 6.412400000000002
     },
     {
-      "ts": "2025-10-28T04:38:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 6.691200000000002
     },
     {
-      "ts": "2025-10-28T04:39:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 6.970000000000002
     },
     {
-      "ts": "2025-10-28T04:39:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 7.248800000000003
     },
     {
-      "ts": "2025-10-28T04:40:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 7.527600000000001
     },
     {
-      "ts": "2025-10-28T04:40:48Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 7.806400000000002
     },
     {
-      "ts": "2025-10-28T04:41:18Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 8.0852
     },
     {
-      "ts": "2025-10-28T04:41:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 8.364
     },
     {
-      "ts": "2025-10-28T04:42:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 8.642800000000001
     },
     {
-      "ts": "2025-10-28T04:42:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 8.9216
     },
     {
-      "ts": "2025-10-28T04:43:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 9.200399999999998
     },
     {
-      "ts": "2025-10-28T04:43:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 9.479199999999999
     },
     {
-      "ts": "2025-10-28T04:44:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 9.758
     },
     {
-      "ts": "2025-10-28T04:44:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 10.036799999999998
     },
     {
-      "ts": "2025-10-28T04:45:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 10.315599999999996
     },
     {
-      "ts": "2025-10-28T04:45:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 10.594399999999997
     },
     {
-      "ts": "2025-10-28T04:46:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 10.873199999999997
     },
     {
-      "ts": "2025-10-28T04:46:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 11.151999999999996
     },
     {
-      "ts": "2025-10-28T04:47:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 11.430799999999994
     },
     {
-      "ts": "2025-10-28T04:47:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 11.709599999999995
     },
     {
-      "ts": "2025-10-28T04:48:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 11.988399999999995
     },
     {
-      "ts": "2025-10-28T04:48:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 12.267199999999994
     },
     {
-      "ts": "2025-10-28T04:49:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 12.545999999999992
     },
     {
-      "ts": "2025-10-28T04:49:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 12.824799999999993
     },
     {
-      "ts": "2025-10-28T04:50:19Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 13.103599999999993
     },
     {
-      "ts": "2025-10-28T04:50:49Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 13.382399999999992
     },
     {
-      "ts": "2025-10-28T04:51:20Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 13.66119999999999
     },
     {
-      "ts": "2025-10-28T04:51:50Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 13.93999999999999
     },
     {
-      "ts": "2025-10-28T04:52:20Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 14.218799999999991
     },
     {
-      "ts": "2025-10-28T04:52:50Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 14.49759999999999
     },
     {
-      "ts": "2025-10-28T04:53:20Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 14.776399999999988
     },
     {
-      "ts": "2025-10-28T04:53:50Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 15.055199999999989
     },
     {
-      "ts": "2025-10-28T04:54:20Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 15.333999999999989
     },
     {
-      "ts": "2025-10-28T04:54:50Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 15.612799999999988
     },
     {
-      "ts": "2025-10-28T04:55:20Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 15.891599999999986
     },
     {
-      "ts": "2025-10-28T04:55:50Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 16.170399999999987
     },
     {
-      "ts": "2025-10-28T04:56:20Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 16.449199999999987
     },
     {
-      "ts": "2025-10-28T04:56:50Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 16.727999999999987
     },
     {
-      "ts": "2025-10-28T05:12:05Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 17.006799999999984
     },
     {
-      "ts": "2025-10-28T05:12:35Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 17.285599999999985
     },
     {
-      "ts": "2025-10-28T05:13:05Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 17.564399999999985
     },
     {
-      "ts": "2025-10-28T05:13:35Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 17.84319999999998
     },
     {
-      "ts": "2025-10-28T05:14:05Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 18.121999999999982
     },
     {
-      "ts": "2025-10-28T05:14:35Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 18.400799999999983
     },
     {
-      "ts": "2025-10-28T05:17:13Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 18.679599999999983
     },
     {
-      "ts": "2025-10-28T05:17:41Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 18.958399999999983
     },
     {
-      "ts": "2025-10-28T05:17:43Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 19.23719999999998
     },
     {
-      "ts": "2025-10-28T05:18:11Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 19.51599999999998
     },
     {
-      "ts": "2025-10-28T05:18:13Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 19.79479999999998
     },
     {
-      "ts": "2025-10-28T05:18:41Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 20.073599999999978
     },
     {
-      "ts": "2025-10-28T05:18:43Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 20.352399999999978
     },
     {
-      "ts": "2025-10-28T05:19:11Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 20.63119999999998
     },
     {
-      "ts": "2025-10-28T05:19:13Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 20.90999999999998
     },
     {
-      "ts": "2025-10-28T05:19:41Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 21.18879999999998
     },
     {
-      "ts": "2025-10-28T05:19:43Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 21.467599999999976
     },
     {
-      "ts": "2025-10-28T05:20:11Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 21.746399999999976
     },
     {
-      "ts": "2025-10-28T05:20:13Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 22.025199999999977
     },
     {
-      "ts": "2025-10-28T05:20:41Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 22.303999999999974
     },
     {
-      "ts": "2025-10-28T05:20:43Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 22.582799999999974
     },
     {
-      "ts": "2025-10-28T05:21:11Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 22.861599999999974
     },
     {
-      "ts": "2025-10-28T05:21:13Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 23.140399999999975
     },
     {
-      "ts": "2025-10-28T05:21:41Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 23.419199999999975
     },
     {
-      "ts": "2025-10-28T05:21:43Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 23.697999999999972
     },
     {
-      "ts": "2025-10-28T05:22:11Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 23.976799999999972
     },
     {
-      "ts": "2025-10-28T05:22:41Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 24.255599999999973
     },
     {
-      "ts": "2025-10-28T05:22:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 24.53439999999997
     },
     {
-      "ts": "2025-10-28T05:23:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 24.81319999999997
     },
     {
-      "ts": "2025-10-28T05:23:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 25.09199999999997
     },
     {
-      "ts": "2025-10-28T05:24:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 25.37079999999997
     },
     {
-      "ts": "2025-10-28T05:24:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 25.64959999999997
     },
     {
-      "ts": "2025-10-28T05:25:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 25.928399999999968
     },
     {
-      "ts": "2025-10-28T05:25:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 26.20719999999997
     },
     {
-      "ts": "2025-10-28T05:26:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 26.48599999999997
     },
     {
-      "ts": "2025-10-28T05:26:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 26.764799999999966
     },
     {
-      "ts": "2025-10-28T05:27:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 27.043599999999966
     },
     {
-      "ts": "2025-10-28T05:27:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 27.32239999999997
     },
     {
-      "ts": "2025-10-28T05:28:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 27.60119999999997
     },
     {
-      "ts": "2025-10-28T05:28:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 27.879999999999974
     },
     {
-      "ts": "2025-10-28T05:29:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 28.158799999999975
     },
     {
-      "ts": "2025-10-28T05:29:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 28.43759999999998
     },
     {
-      "ts": "2025-10-28T05:30:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 28.71639999999998
     },
     {
-      "ts": "2025-10-28T05:30:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 28.995199999999983
     },
     {
-      "ts": "2025-10-28T05:31:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 29.273999999999983
     },
     {
-      "ts": "2025-10-28T05:31:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 29.552799999999987
     },
     {
-      "ts": "2025-10-28T05:32:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 29.831599999999987
     },
     {
-      "ts": "2025-10-28T05:32:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 30.11039999999999
     },
     {
-      "ts": "2025-10-28T05:33:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 30.38919999999999
     },
     {
-      "ts": "2025-10-28T05:33:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 30.667999999999996
     },
     {
-      "ts": "2025-10-28T05:34:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 30.946799999999996
     },
     {
-      "ts": "2025-10-28T05:34:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 31.2256
     },
     {
-      "ts": "2025-10-28T05:35:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 31.5044
     },
     {
-      "ts": "2025-10-28T05:35:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 31.783200000000004
     },
     {
-      "ts": "2025-10-28T05:36:26Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 32.062000000000005
     },
     {
-      "ts": "2025-10-28T05:36:56Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 32.34080000000001
     },
     {
-      "ts": "2025-10-28T05:37:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 32.619600000000005
     },
     {
-      "ts": "2025-10-28T05:37:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 32.89840000000001
     },
     {
-      "ts": "2025-10-28T05:38:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 33.17720000000001
     },
     {
-      "ts": "2025-10-28T05:38:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 33.45600000000002
     },
     {
-      "ts": "2025-10-28T05:39:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 33.73480000000002
     },
     {
-      "ts": "2025-10-28T05:39:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 34.013600000000025
     },
     {
-      "ts": "2025-10-28T05:40:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 34.29240000000002
     },
     {
-      "ts": "2025-10-28T05:40:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 34.571200000000026
     },
     {
-      "ts": "2025-10-28T05:41:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 34.85000000000002
     },
     {
-      "ts": "2025-10-28T05:41:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 35.12880000000003
     },
     {
-      "ts": "2025-10-28T05:42:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 35.40760000000003
     },
     {
-      "ts": "2025-10-28T05:42:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 35.686400000000035
     },
     {
-      "ts": "2025-10-28T05:43:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 35.96520000000004
     },
     {
-      "ts": "2025-10-28T05:43:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 36.24400000000004
     },
     {
-      "ts": "2025-10-28T05:44:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 36.52280000000004
     },
     {
-      "ts": "2025-10-28T05:44:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 36.80160000000004
     },
     {
-      "ts": "2025-10-28T05:45:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 37.08040000000004
     },
     {
-      "ts": "2025-10-28T05:45:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 37.359200000000044
     },
     {
-      "ts": "2025-10-28T05:46:27Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 37.63800000000005
     },
     {
-      "ts": "2025-10-28T05:46:57Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 37.91680000000005
     },
     {
-      "ts": "2025-10-28T05:47:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 38.195600000000056
     },
     {
-      "ts": "2025-10-28T05:47:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 38.47440000000006
     },
     {
-      "ts": "2025-10-28T05:48:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 38.75320000000006
     },
     {
-      "ts": "2025-10-28T05:48:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 39.03200000000006
     },
     {
-      "ts": "2025-10-28T05:49:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 39.31080000000006
     },
     {
-      "ts": "2025-10-28T05:49:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 39.58960000000006
     },
     {
-      "ts": "2025-10-28T05:50:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 39.868400000000065
     },
     {
-      "ts": "2025-10-28T05:50:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 40.14720000000007
     },
     {
-      "ts": "2025-10-28T05:51:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 40.42600000000007
     },
     {
-      "ts": "2025-10-28T05:51:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 40.70480000000008
     },
     {
-      "ts": "2025-10-28T05:52:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 40.983600000000074
     },
     {
-      "ts": "2025-10-28T05:52:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 41.26240000000008
     },
     {
-      "ts": "2025-10-28T05:53:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 41.541200000000075
     },
     {
-      "ts": "2025-10-28T05:53:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 41.82000000000008
     },
     {
-      "ts": "2025-10-28T05:54:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 42.09880000000008
     },
     {
-      "ts": "2025-10-28T05:54:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 42.377600000000086
     },
     {
-      "ts": "2025-10-28T05:55:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 42.65640000000009
     },
     {
-      "ts": "2025-10-28T05:55:58Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 42.935200000000094
     },
     {
-      "ts": "2025-10-28T05:56:28Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 43.21400000000009
     },
     {
-      "ts": "2025-10-28T05:56:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 43.492800000000095
     },
     {
-      "ts": "2025-10-28T05:57:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 43.77160000000009
     },
     {
-      "ts": "2025-10-28T05:57:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 44.050400000000096
     },
     {
-      "ts": "2025-10-28T05:58:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 44.3292000000001
     },
     {
-      "ts": "2025-10-28T05:58:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 44.608000000000104
     },
     {
-      "ts": "2025-10-28T05:59:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 44.88680000000011
     },
     {
-      "ts": "2025-10-28T05:59:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 45.16560000000011
     },
     {
-      "ts": "2025-10-28T06:00:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 45.44440000000011
     },
     {
-      "ts": "2025-10-28T06:00:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 45.72320000000011
     },
     {
-      "ts": "2025-10-28T06:01:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 46.00200000000011
     },
     {
-      "ts": "2025-10-28T06:01:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 46.28080000000011
     },
     {
-      "ts": "2025-10-28T06:02:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 46.55960000000012
     },
     {
-      "ts": "2025-10-28T06:02:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 46.83840000000012
     },
     {
-      "ts": "2025-10-28T06:03:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 47.117200000000125
     },
     {
-      "ts": "2025-10-28T06:03:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 47.39600000000013
     },
     {
-      "ts": "2025-10-28T06:04:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 47.674800000000126
     },
     {
-      "ts": "2025-10-28T06:04:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 47.95360000000013
     },
     {
-      "ts": "2025-10-28T06:05:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 48.232400000000126
     },
     {
-      "ts": "2025-10-28T06:05:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 48.51120000000013
     },
     {
-      "ts": "2025-10-28T06:06:29Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 48.790000000000134
     },
     {
-      "ts": "2025-10-28T06:06:59Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 49.06880000000014
     },
     {
-      "ts": "2025-10-28T06:07:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 49.34760000000014
     },
     {
-      "ts": "2025-10-28T06:08:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 49.626400000000146
     },
     {
-      "ts": "2025-10-28T06:08:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 49.90520000000014
     },
     {
-      "ts": "2025-10-28T06:09:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 50.18400000000015
     },
     {
-      "ts": "2025-10-28T06:09:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 50.46280000000014
     },
     {
-      "ts": "2025-10-28T06:10:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 50.74160000000015
     },
     {
-      "ts": "2025-10-28T06:10:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 51.02040000000015
     },
     {
-      "ts": "2025-10-28T06:11:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 51.299200000000155
     },
     {
-      "ts": "2025-10-28T06:11:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 51.57800000000016
     },
     {
-      "ts": "2025-10-28T06:12:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 51.85680000000016
     },
     {
-      "ts": "2025-10-28T06:12:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 52.13560000000016
     },
     {
-      "ts": "2025-10-28T06:13:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 52.414400000000164
     },
     {
-      "ts": "2025-10-28T06:13:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 52.69320000000016
     },
     {
-      "ts": "2025-10-28T06:14:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 52.972000000000165
     },
     {
-      "ts": "2025-10-28T06:14:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 53.25080000000017
     },
     {
-      "ts": "2025-10-28T06:15:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 53.52960000000017
     },
     {
-      "ts": "2025-10-28T06:15:30Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 53.80840000000018
     },
     {
-      "ts": "2025-10-28T06:16:00Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 54.08720000000018
     },
     {
-      "ts": "2025-10-28T06:16:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 54.36600000000018
     },
     {
-      "ts": "2025-10-28T06:17:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 54.64480000000018
     },
     {
-      "ts": "2025-10-28T06:17:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 54.92360000000018
     },
     {
-      "ts": "2025-10-28T06:18:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 55.20240000000018
     },
     {
-      "ts": "2025-10-28T06:18:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 55.481200000000186
     },
     {
-      "ts": "2025-10-28T06:19:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 55.76000000000019
     },
     {
-      "ts": "2025-10-28T06:19:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 56.038800000000194
     },
     {
-      "ts": "2025-10-28T06:20:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 56.3176000000002
     },
     {
-      "ts": "2025-10-28T06:20:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 56.596400000000195
     },
     {
-      "ts": "2025-10-28T06:21:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 56.8752000000002
     },
     {
-      "ts": "2025-10-28T06:21:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 57.154000000000195
     },
     {
-      "ts": "2025-10-28T06:22:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 57.4328000000002
     },
     {
-      "ts": "2025-10-28T06:22:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 57.7116000000002
     },
     {
-      "ts": "2025-10-28T06:23:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 57.99040000000021
     },
     {
-      "ts": "2025-10-28T06:23:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 58.26920000000021
     },
     {
-      "ts": "2025-10-28T06:24:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 58.548000000000215
     },
     {
-      "ts": "2025-10-28T06:24:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 58.82680000000021
     },
     {
-      "ts": "2025-10-28T06:25:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 59.105600000000216
     },
     {
-      "ts": "2025-10-28T06:25:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 59.38440000000021
     },
     {
-      "ts": "2025-10-28T06:26:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 59.66320000000022
     },
     {
-      "ts": "2025-10-28T06:26:31Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 59.94200000000022
     },
     {
-      "ts": "2025-10-28T06:27:01Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 60.220800000000224
     },
     {
-      "ts": "2025-10-28T06:27:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 60.49960000000023
     },
     {
-      "ts": "2025-10-28T06:28:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 60.77840000000023
     },
     {
-      "ts": "2025-10-28T06:28:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 61.05720000000023
     },
     {
-      "ts": "2025-10-28T06:29:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 61.33600000000023
     },
     {
-      "ts": "2025-10-28T06:29:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 61.61480000000023
     },
     {
-      "ts": "2025-10-28T06:30:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 61.893600000000234
     },
     {
-      "ts": "2025-10-28T06:30:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 62.17240000000024
     },
     {
-      "ts": "2025-10-28T06:31:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 62.45120000000024
     },
     {
-      "ts": "2025-10-28T06:31:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 62.730000000000246
     },
     {
-      "ts": "2025-10-28T06:32:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 63.00880000000025
     },
     {
-      "ts": "2025-10-28T06:32:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 63.287600000000246
     },
     {
-      "ts": "2025-10-28T06:33:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 63.56640000000025
     },
     {
-      "ts": "2025-10-28T06:33:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 63.84520000000025
     },
     {
-      "ts": "2025-10-28T06:34:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 64.12400000000025
     },
     {
-      "ts": "2025-10-28T06:34:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 64.40280000000025
     },
     {
-      "ts": "2025-10-28T06:35:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 64.68160000000026
     },
     {
-      "ts": "2025-10-28T06:35:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 64.96040000000026
     },
     {
-      "ts": "2025-10-28T06:36:02Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 65.23920000000027
     },
     {
-      "ts": "2025-10-28T06:36:32Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 65.51800000000026
     },
     {
-      "ts": "2025-10-28T06:37:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 65.79680000000027
     },
     {
-      "ts": "2025-10-28T06:37:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 66.07560000000026
     },
     {
-      "ts": "2025-10-28T06:38:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 66.35440000000027
     },
     {
-      "ts": "2025-10-28T06:38:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 66.63320000000027
     },
     {
-      "ts": "2025-10-28T06:39:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 66.91200000000028
     },
     {
-      "ts": "2025-10-28T06:39:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 67.19080000000028
     },
     {
-      "ts": "2025-10-28T06:40:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 67.46960000000028
     },
     {
-      "ts": "2025-10-28T06:40:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 67.74840000000029
     },
     {
-      "ts": "2025-10-28T06:41:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 68.02720000000028
     },
     {
-      "ts": "2025-10-28T06:41:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 68.3060000000003
     },
     {
-      "ts": "2025-10-28T06:42:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 68.58480000000029
     },
     {
-      "ts": "2025-10-28T06:42:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 68.86360000000029
     },
     {
-      "ts": "2025-10-28T06:43:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 69.1424000000003
     },
     {
-      "ts": "2025-10-28T06:43:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 69.4212000000003
     },
     {
-      "ts": "2025-10-28T06:44:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 69.7000000000003
     },
     {
-      "ts": "2025-10-28T06:44:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 69.97880000000029
     },
     {
-      "ts": "2025-10-28T06:45:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 70.25760000000031
     },
     {
-      "ts": "2025-10-28T06:45:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 70.5364000000003
     },
     {
-      "ts": "2025-10-28T06:46:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 70.8152000000003
     },
     {
-      "ts": "2025-10-28T06:46:33Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 71.0940000000003
     },
     {
-      "ts": "2025-10-28T06:47:03Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 71.37280000000031
     },
     {
-      "ts": "2025-10-28T06:47:34Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 71.65160000000031
     },
     {
-      "ts": "2025-10-28T06:48:04Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 71.93040000000032
     },
     {
-      "ts": "2025-10-28T06:48:34Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 72.20920000000032
     },
     {
-      "ts": "2025-10-28T06:49:04Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 72.48800000000031
     },
     {
-      "ts": "2025-10-28T06:49:34Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 72.76680000000033
     },
     {
-      "ts": "2025-10-28T06:50:04Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 73.04560000000032
     },
     {
-      "ts": "2025-10-28T06:50:34Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 73.32440000000032
     },
     {
-      "ts": "2025-10-28T06:51:04Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 73.60320000000033
     },
     {
-      "ts": "2025-10-28T06:51:34Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 73.88200000000033
     },
     {
-      "ts": "2025-10-28T06:52:04Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 74.16080000000034
     },
     {
-      "ts": "2025-10-28T06:52:34Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 74.43960000000033
     },
     {
-      "ts": "2025-10-28T07:01:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 74.71840000000034
     },
     {
-      "ts": "2025-10-28T07:02:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 74.99720000000033
     },
     {
-      "ts": "2025-10-28T07:02:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 75.27600000000034
     },
     {
-      "ts": "2025-10-28T07:03:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 75.55480000000034
     },
     {
-      "ts": "2025-10-28T07:03:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 75.83360000000035
     },
     {
-      "ts": "2025-10-28T07:04:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 76.11240000000035
     },
     {
-      "ts": "2025-10-28T07:04:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 76.39120000000035
     },
     {
-      "ts": "2025-10-28T07:05:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 76.67000000000036
     },
     {
-      "ts": "2025-10-28T07:05:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 76.94880000000035
     },
     {
-      "ts": "2025-10-28T07:06:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 77.22760000000036
     },
     {
-      "ts": "2025-10-28T07:06:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 77.50640000000035
     },
     {
-      "ts": "2025-10-28T07:07:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 77.78520000000036
     },
     {
-      "ts": "2025-10-28T07:07:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 78.06400000000036
     },
     {
-      "ts": "2025-10-28T07:08:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 78.34280000000037
     },
     {
-      "ts": "2025-10-28T07:08:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 78.62160000000037
     },
     {
-      "ts": "2025-10-28T07:09:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 78.90040000000036
     },
     {
-      "ts": "2025-10-28T07:09:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 79.17920000000038
     },
     {
-      "ts": "2025-10-28T07:10:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 79.45800000000037
     },
     {
-      "ts": "2025-10-28T07:10:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 79.73680000000039
     },
     {
-      "ts": "2025-10-28T07:11:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 80.01560000000038
     },
     {
-      "ts": "2025-10-28T07:11:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 80.29440000000038
     },
     {
-      "ts": "2025-10-28T07:12:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 80.57320000000038
     },
     {
-      "ts": "2025-10-28T07:12:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 80.85200000000037
     },
     {
-      "ts": "2025-10-28T07:13:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 81.13080000000039
     },
     {
-      "ts": "2025-10-28T07:13:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 81.40960000000038
     },
     {
-      "ts": "2025-10-28T07:14:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 81.6884000000004
     },
     {
-      "ts": "2025-10-28T07:14:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 81.96720000000039
     },
     {
-      "ts": "2025-10-28T07:15:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 82.2460000000004
     },
     {
-      "ts": "2025-10-28T07:15:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 82.5248000000004
     },
     {
-      "ts": "2025-10-28T07:16:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 82.8036000000004
     },
     {
-      "ts": "2025-10-28T07:16:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 83.0824000000004
     },
     {
-      "ts": "2025-10-28T07:17:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 83.3612000000004
     },
     {
-      "ts": "2025-10-28T07:17:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 83.64000000000041
     },
     {
-      "ts": "2025-10-28T07:18:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 83.9188000000004
     },
     {
-      "ts": "2025-10-28T07:18:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 84.19760000000042
     },
     {
-      "ts": "2025-10-28T07:19:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 84.47640000000041
     },
     {
-      "ts": "2025-10-28T07:19:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 84.75520000000041
     },
     {
-      "ts": "2025-10-28T07:20:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 85.03400000000042
     },
     {
-      "ts": "2025-10-28T07:20:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 85.31280000000041
     },
     {
-      "ts": "2025-10-28T07:21:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 85.59160000000043
     },
     {
-      "ts": "2025-10-28T07:21:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 85.87040000000042
     },
     {
-      "ts": "2025-10-28T07:22:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 86.14920000000043
     },
     {
-      "ts": "2025-10-28T07:22:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 86.42800000000042
     },
     {
-      "ts": "2025-10-28T07:23:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 86.70680000000043
     },
     {
-      "ts": "2025-10-28T07:23:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 86.98560000000043
     },
     {
-      "ts": "2025-10-28T07:24:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 87.26440000000044
     },
     {
-      "ts": "2025-10-28T07:24:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 87.54320000000044
     },
     {
-      "ts": "2025-10-28T07:25:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 87.82200000000043
     },
     {
-      "ts": "2025-10-28T07:25:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 88.10080000000045
     },
     {
-      "ts": "2025-10-28T07:28:21Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 88.37960000000044
     },
     {
-      "ts": "2025-10-28T07:28:51Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 88.65840000000046
     },
     {
-      "ts": "2025-10-28T07:29:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 88.93720000000044
     },
     {
-      "ts": "2025-10-28T07:29:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 89.21600000000045
     },
     {
-      "ts": "2025-10-28T07:30:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 89.49480000000045
     },
     {
-      "ts": "2025-10-28T07:30:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 89.77360000000044
     },
     {
-      "ts": "2025-10-28T07:31:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 90.05240000000046
     },
     {
-      "ts": "2025-10-28T07:31:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 90.33120000000045
     },
     {
-      "ts": "2025-10-28T07:32:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 90.61000000000047
     },
     {
-      "ts": "2025-10-28T07:32:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 90.88880000000046
     },
     {
-      "ts": "2025-10-28T07:33:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 91.16760000000046
     },
     {
-      "ts": "2025-10-28T07:33:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 91.44640000000047
     },
     {
-      "ts": "2025-10-28T07:34:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 91.72520000000047
     },
     {
-      "ts": "2025-10-28T07:34:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 92.00400000000047
     },
     {
-      "ts": "2025-10-28T07:35:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 92.28280000000046
     },
     {
-      "ts": "2025-10-28T07:35:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 92.56160000000048
     },
     {
-      "ts": "2025-10-28T07:36:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 92.84040000000047
     },
     {
-      "ts": "2025-10-28T07:36:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 93.11920000000049
     },
     {
-      "ts": "2025-10-28T07:37:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 93.39800000000048
     },
     {
-      "ts": "2025-10-28T07:37:52Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 93.67680000000048
     },
     {
-      "ts": "2025-10-28T07:38:22Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 93.95560000000049
     },
     {
-      "ts": "2025-10-28T07:38:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 94.23440000000048
     },
     {
-      "ts": "2025-10-28T07:39:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 94.5132000000005
     },
     {
-      "ts": "2025-10-28T07:39:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 94.79200000000048
     },
     {
-      "ts": "2025-10-28T07:40:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 95.0708000000005
     },
     {
-      "ts": "2025-10-28T07:40:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 95.34960000000049
     },
     {
-      "ts": "2025-10-28T07:41:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 95.6284000000005
     },
     {
-      "ts": "2025-10-28T07:41:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 95.9072000000005
     },
     {
-      "ts": "2025-10-28T07:42:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 96.1860000000005
     },
     {
-      "ts": "2025-10-28T07:42:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 96.46480000000051
     },
     {
-      "ts": "2025-10-28T07:43:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 96.7436000000005
     },
     {
-      "ts": "2025-10-28T07:43:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 97.02240000000052
     },
     {
-      "ts": "2025-10-28T07:44:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 97.3012000000005
     },
     {
-      "ts": "2025-10-28T07:44:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 97.58000000000052
     },
     {
-      "ts": "2025-10-28T07:45:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 97.85880000000051
     },
     {
-      "ts": "2025-10-28T07:45:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 98.13760000000052
     },
     {
-      "ts": "2025-10-28T07:46:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 98.41640000000052
     },
     {
-      "ts": "2025-10-28T07:46:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 98.69520000000051
     },
     {
-      "ts": "2025-10-28T07:47:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 98.97400000000053
     },
     {
-      "ts": "2025-10-28T07:47:53Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 99.25280000000052
     },
     {
-      "ts": "2025-10-28T07:48:23Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 99.53160000000054
     },
     {
-      "ts": "2025-10-28T07:48:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 99.81040000000053
     },
     {
-      "ts": "2025-10-28T07:49:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 100.08920000000053
     },
     {
-      "ts": "2025-10-28T07:49:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 100.36800000000054
     },
     {
-      "ts": "2025-10-28T07:50:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 100.64680000000054
     },
     {
-      "ts": "2025-10-28T07:50:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 100.92560000000054
     },
     {
-      "ts": "2025-10-28T07:51:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 101.20440000000053
     },
     {
-      "ts": "2025-10-28T07:51:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 101.48320000000055
     },
     {
-      "ts": "2025-10-28T07:52:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 101.76200000000054
     },
     {
-      "ts": "2025-10-28T07:52:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 102.04080000000056
     },
     {
-      "ts": "2025-10-28T07:53:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 102.31960000000055
     },
     {
-      "ts": "2025-10-28T07:53:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 102.59840000000055
     },
     {
-      "ts": "2025-10-28T07:54:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 102.87720000000056
     },
     {
-      "ts": "2025-10-28T07:54:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 103.15600000000055
     },
     {
-      "ts": "2025-10-28T07:55:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 103.43480000000056
     },
     {
-      "ts": "2025-10-28T07:55:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 103.71360000000055
     },
     {
-      "ts": "2025-10-28T07:56:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 103.99240000000057
     },
     {
-      "ts": "2025-10-28T07:56:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 104.27120000000056
     },
     {
-      "ts": "2025-10-28T07:57:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 104.55000000000057
     },
     {
-      "ts": "2025-10-28T07:57:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 104.82880000000057
     },
     {
-      "ts": "2025-10-28T07:58:24Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 105.10760000000057
     },
     {
-      "ts": "2025-10-28T07:58:54Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 105.38640000000058
     },
     {
-      "ts": "2025-10-28T07:59:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 105.66520000000057
     },
     {
-      "ts": "2025-10-28T07:59:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 105.94400000000059
     },
     {
-      "ts": "2025-10-28T08:00:25Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 106.22280000000057
     },
     {
-      "ts": "2025-10-28T08:00:55Z",
+      "ts": null,
       "total_staked": 850,
       "total_earned": 106.5016000000006
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 106.78040000000058
+    },
+    {
+      "ts": null,
+      "total_staked": 850,
+      "total_earned": 107.05920000000059
     }
-  ]
+  ],
+  "fees_total": 2.812600
 }
