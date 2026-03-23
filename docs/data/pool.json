@@ -1,1 +1,23 @@
-{"ts": "2025-10-28T08:47:11Z", "total_staked": 850.0, "total_earned": 122.39320000000069, "fees_total": 3.40628}
+{
+  "total_staked": 4000.0,
+  "total_earned": 0.00368475,
+  "fees_total": 0.00019397,
+  "wallets": {
+    "louise": {
+      "staked": 1000.0,
+      "earned": 0.00092123,
+      "fees_paid": 4.845e-05
+    },
+    "nala": {
+      "staked": 2500.0,
+      "earned": 0.00230299,
+      "fees_paid": 0.00012121
+    },
+    "surfbot": {
+      "staked": 500.0,
+      "earned": 0.00046053,
+      "fees_paid": 2.431e-05
+    }
+  },
+  "updated_at": "2026-03-23T07:10:49.665719+00:00"
+}
