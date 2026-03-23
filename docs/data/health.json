@@ -1,6 +1,6 @@
 {
-  "published_at": "2026-03-23T07:10:59Z",
-  "api_reachable": true,
+  "published_at": "2026-03-23T23:54:49Z",
+  "api_reachable": false,
   "index_copied": true,
   "ledger_copied": true,
   "source": "publish-demo.sh"
