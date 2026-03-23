@@ -1,604 +1,1013 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Readyroom — Every checkout, ready in minutes.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --teal: #0D9488;
-    --teal-light: #14B8A6;
-    --teal-pale: #CCFBF1;
-    --sage: #6B8F71;
-    --sage-light: #A8C5A0;
-    --sage-pale: #F0F7F0;
-    --white: #FAFCFB;
-    --charcoal: #1A2420;
-    --mid: #4A5C57;
-    --subtle: #7A9490;
-    --border: #D4E8E3;
-    --border-light: #EBF5F2;
-  }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--charcoal); overflow-x: hidden; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoodWave — Transparent Yield Infrastructure</title>
+  <meta name="description" content="Staking infrastructure where yields are proved in real-time, not promised. Every reward computed, every fee visible, every data point auditable." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --ocean:    #0a4fff;
+      --seafoam:  #00e5a0;
+      --amber:    #ffb830;
+      --violet:   #c084fc;
+      --deep:     #040d1a;
+      --surface:  #071428;
+      --panel:    #0b1f3a;
+      --panel2:   #0e2444;
+      --edge:     rgba(255,255,255,0.06);
+      --edge2:    rgba(255,255,255,0.10);
+      --text:     #e8f0fe;
+      --muted:    #6c8ab0;
+      --danger:   #ff4d6d;
+    }
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.25rem 5rem;
-    background: rgba(250,252,251,0.93);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-  }
-  .logo { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--teal); letter-spacing: -0.02em; text-decoration: none; }
-  .logo span { color: var(--charcoal); }
-  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-  .nav-links a { text-decoration: none; color: var(--mid); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--teal); }
-  .nav-cta { background: var(--teal) !important; color: white !important; padding: 0.6rem 1.4rem; border-radius: 8px; font-weight: 600 !important; transition: background 0.2s !important; }
-  .nav-cta:hover { background: var(--teal-light) !important; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center;
-    padding: 9rem 2rem 5rem;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse 90% 55% at 50% -5%, rgba(13,148,136,0.11) 0%, transparent 70%),
-      radial-gradient(ellipse 30% 30% at 88% 78%, rgba(107,143,113,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 20% 20% at 8% 82%, rgba(13,148,136,0.05) 0%, transparent 60%);
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: var(--teal-pale); color: var(--teal);
-    padding: 0.45rem 1.1rem; border-radius: 100px;
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; margin-bottom: 2.25rem;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s ease both;
-  }
-  .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+    body {
+      background: var(--deep);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-  h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(3.4rem, 7vw, 6.2rem);
-    line-height: 1.04; letter-spacing: -0.03em;
-    color: var(--charcoal); max-width: 820px;
-    margin-bottom: 1.5rem;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s 0.08s ease both;
-  }
-  h1 em { font-style: italic; color: var(--teal); }
+    /* ── GRAIN ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999;
+    }
 
-  .hero-sub {
-    font-size: 1.2rem; color: var(--mid); font-weight: 400;
-    max-width: 520px; line-height: 1.7;
-    margin-bottom: 0.6rem;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s 0.14s ease both;
-  }
+    /* ── AMBIENT ORBS ── */
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(140px); pointer-events: none; z-index: 0;
+      animation: orbDrift 18s ease-in-out infinite alternate;
+    }
+    .orb-1 { width:700px;height:700px;background:rgba(10,79,255,.10);top:-250px;left:-200px; }
+    .orb-2 { width:500px;height:500px;background:rgba(0,229,160,.07);bottom:-80px;right:-80px;animation-delay:-9s; }
+    .orb-3 { width:300px;height:300px;background:rgba(255,184,48,.05);top:40%;left:50%;animation-delay:-4s; }
+    @keyframes orbDrift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.05); }
+    }
 
-  /* #7 trust micro-proof */
-  .hero-trust {
-    font-size: 0.82rem; color: var(--subtle);
-    margin-bottom: 1.75rem;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s 0.18s ease both;
-  }
+    /* ── PULSE DOT ── */
+    .pulse {
+      display: inline-block; width:8px;height:8px;
+      border-radius:50%; background:var(--seafoam);
+      box-shadow:0 0 0 0 rgba(0,229,160,.5);
+      animation: pulseRing 2.2s ease-out infinite;
+      flex-shrink:0;
+    }
+    .pulse.sm { width:6px;height:6px; }
+    .pulse.amber { background:var(--amber); box-shadow:0 0 0 0 rgba(255,184,48,.5); }
+    @keyframes pulseRing {
+      0%  { box-shadow:0 0 0 0 rgba(0,229,160,.55); }
+      70% { box-shadow:0 0 0 10px rgba(0,229,160,0); }
+      100%{ box-shadow:0 0 0 0 rgba(0,229,160,0); }
+    }
 
-  .hero-bridge {
-    display: flex; align-items: center; gap: 1rem;
-    justify-content: center; flex-wrap: wrap;
-    margin-bottom: 2.75rem;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s 0.22s ease both;
-  }
-  .bridge-pill {
-    display: flex; align-items: center; gap: 0.45rem;
-    background: white; border: 1.5px solid var(--border);
-    padding: 0.5rem 1rem; border-radius: 100px;
-    font-size: 0.83rem; font-weight: 500; color: var(--mid);
-  }
-  .bridge-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
-  .bridge-arrow { color: var(--border); font-size: 1.1rem; }
+    /* ── NAV ── */
+    nav {
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 40px;
+      background:rgba(4,13,26,.80);
+      backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--edge);
+    }
+    .logo {
+      font-family:'Syne',sans-serif;font-weight:800;font-size:19px;
+      letter-spacing:-.5px;color:#fff;
+    }
+    .logo em { font-style:normal;color:var(--seafoam); }
+    .nav-center {
+      display:flex;align-items:center;gap:8px;
+      font-size:10px;letter-spacing:.12em;color:var(--muted);
+      text-transform:uppercase;
+    }
+    .nav-right { display:flex;gap:12px;align-items:center; }
+    .btn {
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+      padding:9px 20px;border-radius:6px;border:none;cursor:pointer;
+      transition:all .2s;
+    }
+    .btn-ghost {
+      background:transparent;color:var(--muted);
+      border:1px solid var(--edge2);
+    }
+    .btn-ghost:hover { color:var(--text);border-color:rgba(255,255,255,.2); }
+    .btn-primary {
+      background:var(--seafoam);color:var(--deep);
+    }
+    .btn-primary:hover { background:#00ffb3;transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,229,160,.35); }
 
-  .hero-form {
-    display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s 0.28s ease both;
-  }
-  .hero-form input {
-    padding: 0.95rem 1.5rem;
-    border: 1.5px solid var(--border); border-radius: 10px;
-    font-family: 'DM Sans', sans-serif; font-size: 1rem;
-    width: 285px; background: white; color: var(--charcoal);
-    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .hero-form input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
-  .hero-form input::placeholder { color: #9FBFBA; }
-  .btn-primary {
-    padding: 0.95rem 1.9rem;
-    background: var(--teal); color: white;
-    border: none; border-radius: 10px;
-    font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600;
-    cursor: pointer; white-space: nowrap;
-    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-    box-shadow: 0 4px 14px rgba(13,148,136,0.3);
-  }
-  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(13,148,136,0.35); }
+    /* ── TICKER BAR ── */
+    .ticker {
+      position:relative;z-index:1;
+      background:rgba(0,229,160,.04);
+      border-bottom:1px solid rgba(0,229,160,.10);
+      padding:7px 40px;
+      display:flex;align-items:center;gap:10px;
+      font-size:10px;color:var(--muted);
+      letter-spacing:.06em;
+      margin-top:53px;
+    }
+    .ticker-live { color:var(--seafoam); }
+    #ticker-ts { color:var(--seafoam); }
+    .ticker-sep { color:var(--edge2);padding:0 4px; }
 
-  /* #4 clarified hero note */
-  .hero-note {
-    font-size: 0.82rem; color: var(--subtle); margin-top: 1rem;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s 0.34s ease both;
-  }
+    /* ── HERO ── */
+    .hero {
+      position:relative;z-index:1;
+      min-height:calc(100vh - 53px);
+      display:flex;flex-direction:column;
+      justify-content:center;align-items:center;
+      text-align:center;
+      padding:80px 24px 100px;
+    }
+    .hero-pill {
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(0,229,160,.07);
+      border:1px solid rgba(0,229,160,.18);
+      color:var(--seafoam);
+      font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      padding:6px 18px;border-radius:100px;
+      margin-bottom:36px;
+      animation:fadeUp .9s ease both;
+    }
+    .hero h1 {
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(42px,8vw,96px);
+      line-height:.95;letter-spacing:-3px;
+      color:#fff;max-width:960px;
+      animation:fadeUp .9s .08s ease both;
+    }
+    .hero h1 .grad {
+      background:linear-gradient(100deg,var(--seafoam) 0%,#4da8ff 60%,var(--ocean) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero-body {
+      max-width:520px;margin:28px auto 0;
+      font-size:14px;color:var(--muted);line-height:1.85;
+      animation:fadeUp .9s .16s ease both;
+    }
+    .hero-actions {
+      display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+      margin-top:48px;
+      animation:fadeUp .9s .24s ease both;
+    }
+    .btn-lg { padding:15px 36px;font-size:12px;border-radius:8px; }
+    .hero-scroll {
+      margin-top:72px;
+      display:flex;flex-direction:column;align-items:center;gap:10px;
+      color:var(--muted);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+      animation:fadeUp .9s .4s ease both;
+    }
+    .scroll-line {
+      width:1px;height:52px;
+      background:linear-gradient(var(--muted),transparent);
+      animation:scrollPulse 2.4s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100%{opacity:.4;transform:scaleY(1);}
+      50%{opacity:1;transform:scaleY(1.2);}
+    }
 
-  /* BOARD MOCKUP */
-  .board-section { padding: 1rem 2rem 6rem; display: flex; justify-content: center; }
-  .board {
-    background: white; border: 1.5px solid var(--border); border-radius: 24px; padding: 2rem;
-    max-width: 660px; width: 100%;
-    box-shadow: 0 24px 64px rgba(13,148,136,0.09), 0 4px 16px rgba(0,0,0,0.04);
-    animation: fadeUp 0.7s 0.45s ease both;
-  }
-  .board-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
-  .board-title { font-weight: 700; font-size: 1rem; }
-  .board-subtitle { font-size: 0.78rem; color: var(--subtle); margin-top: 3px; }
-  .status-badge { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 100px; }
-  .status-badge.ready { background: var(--teal-pale); color: var(--teal); }
-  .status-badge.progress { background: #FEF9C3; color: #A16207; }
-  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    /* ── STATS BAR ── */
+    .stats-strip {
+      position:relative;z-index:1;
+      background:var(--surface);
+      border-top:1px solid var(--edge);
+      border-bottom:1px solid var(--edge);
+      display:flex;overflow-x:auto;
+      padding:0 40px;
+    }
+    .stat {
+      flex:1;min-width:150px;
+      padding:26px 24px;
+      border-right:1px solid var(--edge);
+      display:flex;flex-direction:column;gap:5px;
+      transition:background .2s;cursor:default;
+    }
+    .stat:last-child{border-right:none;}
+    .stat:hover{background:rgba(255,255,255,.02);}
+    .stat-lbl {
+      font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    }
+    .stat-val {
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:clamp(20px,3vw,30px);letter-spacing:-1px;
+      transition:opacity .3s;
+    }
+    .stat-val.blue   { color:#5b9cf6; }
+    .stat-val.green  { color:var(--seafoam); }
+    .stat-val.gold   { color:var(--amber); }
+    .stat-val.purple { color:var(--violet); }
+    .stat-sub { font-size:10px;color:var(--muted); }
+    .stat-sub.up { color:var(--seafoam); }
 
-  .role-block { margin-bottom: 1.25rem; }
-  .role-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.5rem; margin-bottom: 0.35rem; border-bottom: 1px solid var(--border-light); }
-  .role-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--subtle); }
-  .role-person { font-size: 0.72rem; color: var(--subtle); }
-  .task-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.4rem; border-radius: 7px; transition: background 0.15s; }
-  .task-row:hover { background: var(--border-light); }
-  .check { width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-  .check.done { background: var(--teal); }
-  .check.done::after { content: '✓'; color: white; font-size: 0.68rem; font-weight: 800; }
-  .check.open { border: 1.5px solid var(--border); }
-  .task-text { font-size: 0.875rem; flex: 1; }
-  .task-text.done { color: var(--subtle); text-decoration: line-through; }
-  .task-time { font-size: 0.72rem; color: var(--subtle); }
-  .task-meta { display:flex; gap:0.5rem; align-items:center; flex-shrink:0; }
-  .task-chip { font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px; }
-  .task-chip.photo { background: var(--teal-pale); color: var(--teal); }
-  .task-chip.req { background: #FEF3C7; color: #92400E; }
+    /* ── GENERIC SECTION WRAPPER ── */
+    .wrap { max-width:1200px;margin:0 auto;padding:0 40px; }
+    .sec { padding:90px 0; }
+    .sec-label {
+      font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--muted);margin-bottom:10px;
+    }
+    .sec-title {
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:clamp(22px,3vw,32px);color:#fff;
+      margin-bottom:36px;
+    }
 
-  .board-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1.25rem; border-top: 1px solid var(--border); margin-top: 0.5rem; }
-  .progress-wrap { display: flex; align-items: center; gap: 0.75rem; }
-  .progress-bar { width: 110px; height: 5px; background: var(--border); border-radius: 4px; overflow: hidden; }
-  /* #1 progress bar width matches "5 of 7" = 71% */
-  .progress-fill { height: 100%; width: 71%; background: linear-gradient(to right, var(--teal), var(--teal-light)); border-radius: 4px; }
-  .progress-text { font-size: 0.78rem; color: var(--subtle); }
-  .share-link-btn { font-size: 0.78rem; font-weight: 600; color: var(--teal); background: var(--teal-pale); border: none; padding: 0.4rem 0.9rem; border-radius: 6px; cursor: pointer; }
+    /* ── CHART CARD ── */
+    .chart-card {
+      background:var(--panel);
+      border:1px solid var(--edge);
+      border-radius:16px;padding:32px;
+      margin-bottom:28px;
+    }
+    .chart-head {
+      display:flex;justify-content:space-between;align-items:flex-start;
+      flex-wrap:wrap;gap:16px;margin-bottom:28px;
+    }
+    .chart-head-title {
+      font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#fff;
+    }
+    .chart-head-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+    .chart-legend{display:flex;gap:18px;flex-wrap:wrap;}
+    .leg-item{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);}
+    .leg-dot{width:8px;height:8px;border-radius:50%;}
+    .chart-canvas-wrap{height:260px;position:relative;}
+    #chart-msg {
+      display:none;position:absolute;inset:0;
+      align-items:center;justify-content:center;
+      color:var(--muted);font-size:12px;text-align:center;padding:20px;
+    }
 
-  /* #3 MOAT STRIP — tightened language */
-  .moat-strip {
-    background: var(--charcoal); padding: 1.75rem 5rem;
-    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
-  }
-  .moat-item { display: flex; align-items: center; gap: 0.6rem; color: rgba(255,255,255,0.65); font-size: 0.88rem; }
-  .moat-item::before { content: '✓'; color: var(--teal-light); font-weight: 700; }
+    /* ── WALLET CARDS ── */
+    .wallet-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:18px;margin-bottom:28px;
+    }
+    .wallet-card {
+      background:var(--panel);border:1px solid var(--edge);
+      border-radius:12px;padding:22px;
+      transition:border-color .2s,transform .2s;
+    }
+    .wallet-card:hover{border-color:var(--edge2);transform:translateY(-2px);}
+    .wc-name {
+      font-family:'Syne',sans-serif;font-weight:700;font-size:14px;
+      color:#fff;margin-bottom:16px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .wc-dot{width:9px;height:9px;border-radius:50%;}
+    .wc-row{
+      display:flex;justify-content:space-between;
+      font-size:11px;color:var(--muted);margin-bottom:7px;
+    }
+    .wc-row span:last-child{color:var(--text);}
+    .wc-bar-bg{
+      height:2px;background:rgba(255,255,255,.06);
+      border-radius:1px;margin-top:16px;overflow:hidden;
+    }
+    .wc-bar{height:100%;border-radius:1px;width:0%;transition:width 1s ease;}
 
-  /* PROBLEM */
-  .problem { background: var(--charcoal); color: white; padding: 6rem 5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
-  .problem h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.2; max-width: 720px; margin: 0 auto 2.5rem; }
-  .problem h2 em { color: var(--teal-light); font-style: italic; }
-  .pain-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; max-width: 960px; margin: 0 auto; }
-  .pain-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; text-align: left; }
-  .pain-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
-  .pain-card h4 { font-size: 0.9rem; font-weight: 600; color: white; margin-bottom: 0.5rem; }
-  .pain-card p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+    /* ── DEVNET PILL ── */
+    .devnet-pill {
+      display:inline-flex;align-items:center;gap:10px;
+      background:rgba(255,184,48,.06);
+      border:1px solid rgba(255,184,48,.2);
+      border-radius:10px;padding:16px 22px;
+      font-size:11px;color:var(--muted);
+      line-height:1.7;
+    }
+    .devnet-pill strong{color:var(--amber);}
 
-  /* HOW */
-  .how { padding: 7rem 5rem; max-width: 1100px; margin: 0 auto; }
-  .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
-  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); line-height: 1.12; max-width: 480px; margin-bottom: 4rem; }
-  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 3rem; position: relative; }
-  .steps::before { content: ''; position: absolute; top: 28px; left: calc(16.66% + 1rem); right: calc(16.66% + 1rem); height: 1.5px; background: linear-gradient(to right, var(--teal), var(--sage-light)); }
-  .step { text-align: center; }
-  .step-num { width: 56px; height: 56px; border-radius: 50%; background: var(--teal); color: white; font-family: 'DM Serif Display', serif; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; position: relative; z-index: 1; box-shadow: 0 4px 16px rgba(13,148,136,0.25); }
-  .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-  .step p { font-size: 0.88rem; color: var(--mid); line-height: 1.7; }
+    /* ── PIPELINE ── */
+    .pipeline {
+      display:flex;align-items:stretch;
+      flex-wrap:wrap;gap:0;margin-top:36px;
+    }
+    .pipe-node {
+      flex:1;min-width:110px;
+      background:var(--panel);border:1px solid var(--edge);
+      border-radius:12px;padding:22px 14px;text-align:center;
+      transition:border-color .25s,transform .25s;
+      position:relative;
+    }
+    .pipe-node:hover{border-color:rgba(0,229,160,.25);transform:translateY(-3px);}
+    .pipe-node:not(:last-child)::after {
+      content:'→';
+      position:absolute;right:-18px;top:50%;transform:translateY(-50%);
+      font-size:14px;color:var(--muted);z-index:2;
+    }
+    .pipe-icon{font-size:26px;margin-bottom:10px;}
+    .pipe-name{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:12px;color:#fff;margin-bottom:6px;
+    }
+    .pipe-desc{font-size:10px;color:var(--muted);line-height:1.6;}
 
-  /* FEATURES */
-  .features { background: var(--sage-pale); padding: 7rem 5rem; }
-  .features-inner { max-width: 1100px; margin: 0 auto; }
-  .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
-  .feature-card { background: white; padding: 2rem; border: 1.5px solid var(--border); border-radius: 16px; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
-  .feature-card:hover { border-color: var(--teal); box-shadow: 0 8px 32px rgba(13,148,136,0.09); transform: translateY(-2px); }
-  .feature-icon { font-size: 1.75rem; margin-bottom: 1rem; display: block; }
-  .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; }
-  .feature-card p { font-size: 0.875rem; color: var(--mid); line-height: 1.7; }
-  /* #6 simplified feature tags */
-  .feature-tag { display: inline-block; margin-top: 1rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; }
-  .feature-tag.included { background: var(--teal-pale); color: var(--teal); }
-  .feature-tag.cleaner { background: #FEF3C7; color: #92400E; }
-  .feature-tag.pro { background: #EDE9FE; color: #6D28D9; }
+    /* ── WHY CARDS ── */
+    .why-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:18px;margin-top:36px;
+    }
+    .why-card{
+      background:var(--panel);border:1px solid var(--edge);
+      border-radius:12px;padding:26px;
+      transition:border-color .2s;
+    }
+    .why-card:hover{border-color:var(--edge2);}
+    .why-icon{font-size:26px;margin-bottom:14px;}
+    .why-title{
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:14px;color:#fff;margin-bottom:8px;
+    }
+    .why-desc{font-size:11px;color:var(--muted);line-height:1.75;}
 
-  /* #8 TEMPLATES PREVIEW */
-  .templates-preview { padding: 7rem 5rem; max-width: 1100px; margin: 0 auto; }
-  .templates-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 3rem;
-  }
-  .template-item {
-    display: flex; align-items: flex-start; gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    background: white; border: 1.5px solid var(--border); border-radius: 12px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .template-item:hover { border-color: var(--teal); box-shadow: 0 4px 16px rgba(13,148,136,0.08); }
-  .template-emoji { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
-  .template-info { min-width: 0; }
-  .template-name { font-size: 0.875rem; font-weight: 600; color: var(--charcoal); line-height: 1.3; }
-  .template-role { font-size: 0.72rem; color: var(--subtle); margin-top: 0.2rem; }
-  .templates-more {
-    text-align: center; margin-top: 2rem;
-    font-size: 0.9rem; color: var(--mid);
-  }
-  .templates-more span { color: var(--teal); font-weight: 600; }
+    /* ── EARLY ACCESS ── */
+    .early-wrap{
+      max-width:640px;margin:0 auto;
+      text-align:center;padding:100px 40px;
+      position:relative;z-index:1;
+    }
+    .early-wrap h2 {
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(28px,5vw,54px);
+      line-height:1.05;letter-spacing:-1.5px;
+      color:#fff;margin-bottom:16px;
+    }
+    .early-wrap h2 em {
+      font-style:normal;
+      background:linear-gradient(90deg,var(--seafoam),#4da8ff);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .early-wrap p{
+      color:var(--muted);font-size:13px;line-height:1.85;margin-bottom:44px;
+    }
+    .signup-row{
+      display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+    }
+    .signup-input{
+      flex:1;min-width:230px;
+      background:var(--panel);border:1px solid var(--edge);
+      border-radius:8px;padding:14px 18px;
+      color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;
+      outline:none;transition:border-color .2s;
+    }
+    .signup-input::placeholder{color:var(--muted);}
+    .signup-input:focus{border-color:rgba(0,229,160,.4);}
+    .btn-join{
+      background:var(--seafoam);color:var(--deep);
+      font-family:'Syne',sans-serif;font-weight:700;
+      font-size:12px;letter-spacing:.07em;text-transform:uppercase;
+      padding:14px 26px;border-radius:8px;border:none;
+      cursor:pointer;transition:all .2s;white-space:nowrap;
+    }
+    .btn-join:hover{background:#00ffb3;transform:translateY(-1px);box-shadow:0 8px 28px rgba(0,229,160,.35);}
+    .signup-ok{
+      display:none;
+      background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.25);
+      border-radius:10px;padding:22px;
+      color:var(--seafoam);font-size:13px;text-align:center;
+    }
+    .signup-note{margin-top:14px;font-size:10px;color:var(--muted);}
 
-  /* PRICING */
-  .pricing { padding: 7rem 5rem; background: var(--charcoal); }
-  .pricing-inner { max-width: 860px; margin: 0 auto; text-align: center; }
-  .pricing-inner .section-label { color: var(--teal-light); }
-  .pricing-inner .section-title { color: white; margin: 0 auto 3.5rem; max-width: 100%; }
-  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 700px; margin: 0 auto; }
-  .pricing-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 2.5rem 2rem; text-align: left; }
-  .pricing-card.featured { background: white; border-color: var(--teal); box-shadow: 0 12px 40px rgba(13,148,136,0.2); }
-  .plan-name { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.75rem; }
-  .pricing-card.featured .plan-name { color: var(--teal); }
-  .plan-price { font-family: 'DM Serif Display', serif; font-size: 3rem; color: white; line-height: 1; margin-bottom: 0.25rem; }
-  .pricing-card.featured .plan-price { color: var(--charcoal); }
-  .plan-price sup { font-size: 1.2rem; vertical-align: super; }
-  .plan-period { font-size: 0.85rem; color: rgba(255,255,255,0.35); margin-bottom: 1.75rem; }
-  .pricing-card.featured .plan-period { color: var(--mid); }
-  .plan-features { list-style: none; margin-bottom: 2rem; }
-  .plan-features li { font-size: 0.875rem; padding: 0.45rem 0; display: flex; align-items: flex-start; gap: 0.6rem; color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .plan-features li:last-child { border-bottom: none; }
-  .pricing-card.featured .plan-features li { color: var(--mid); border-bottom-color: var(--border-light); }
-  .plan-features li::before { content: '✓'; color: var(--teal-light); font-weight: 700; flex-shrink: 0; }
-  .pricing-card.featured .plan-features li::before { color: var(--teal); }
-  /* #2 consistent CTA labels */
-  .btn-ghost { display: block; width: 100%; text-align: center; padding: 0.85rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-weight: 600; font-size: 0.95rem; color: white; cursor: pointer; font-family: 'DM Sans', sans-serif; background: none; transition: border-color 0.2s, background 0.2s; }
-  .btn-ghost:hover { border-color: var(--teal-light); background: rgba(13,148,136,0.1); }
-  .btn-primary-full { display: block; width: 100%; text-align: center; padding: 0.85rem; background: var(--teal); border-radius: 10px; font-weight: 600; font-size: 0.95rem; color: white; cursor: pointer; font-family: 'DM Sans', sans-serif; border: none; transition: background 0.2s; box-shadow: 0 4px 14px rgba(13,148,136,0.3); }
-  .btn-primary-full:hover { background: var(--teal-light); }
+    /* ── FOOTER ── */
+    footer{
+      position:relative;z-index:1;
+      border-top:1px solid var(--edge);
+      padding:28px 40px;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:14px;
+    }
+    .foot-logo{
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:15px;color:#fff;
+    }
+    .foot-logo em{font-style:normal;color:var(--seafoam);}
+    .foot-links{display:flex;gap:22px;}
+    .foot-links a{
+      font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--muted);text-decoration:none;transition:color .2s;
+    }
+    .foot-links a:hover{color:var(--text);}
+    .foot-note{font-size:10px;color:var(--muted);}
 
-  /* TESTIMONIALS */
-  .social { padding: 7rem 5rem; }
-  .social-inner { max-width: 1000px; margin: 0 auto; }
-  .testimonials { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 4rem; }
-  .testimonial { background: white; border: 1.5px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: box-shadow 0.2s; }
-  .testimonial:hover { box-shadow: 0 8px 32px rgba(13,148,136,0.08); }
-  .stars { color: #F59E0B; font-size: 0.85rem; margin-bottom: 0.75rem; }
-  .testimonial p { font-size: 0.9rem; color: var(--mid); line-height: 1.75; margin-bottom: 1.25rem; }
-  .t-author { font-size: 0.78rem; color: var(--subtle); }
-  .t-author strong { color: var(--charcoal); display: block; font-weight: 600; }
+    /* ── SCROLL FADE ── */
+    .fi{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+    .fi.in{opacity:1;transform:none;}
 
-  /* FINAL CTA */
-  .final-cta { padding: 9rem 5rem; text-align: center; background: linear-gradient(160deg, var(--teal-pale) 0%, var(--sage-pale) 55%, white 100%); position: relative; overflow: hidden; }
-  .final-cta::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(13,148,136,0.07), transparent 70%); pointer-events: none; }
-  .final-cta h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; position: relative; z-index: 1; }
-  .final-cta h2 em { font-style: italic; color: var(--teal); }
-  .final-cta p { font-size: 1.1rem; color: var(--mid); margin-bottom: 2.5rem; position: relative; z-index: 1; }
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from{opacity:0;transform:translateY(28px);}
+      to{opacity:1;transform:translateY(0);}
+    }
 
-  /* FOOTER */
-  footer { padding: 2.5rem 5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--subtle); }
-  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--teal); }
-
-  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-  .privacy-note { font-size: 0.78rem; color: var(--subtle); margin-top: 0.4rem; }
-
-  @media (max-width: 800px) {
-    .faq-grid { grid-template-columns: 1fr !important; }
-  }
-
-  @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
-
-  @media (max-width: 900px) {
-    nav { padding: 1rem 1.5rem; }
-    .hero, .problem, .how, .features, .templates-preview, .pricing, .social, .final-cta { padding: 5rem 1.5rem; }
-    .moat-strip { padding: 1.5rem; gap: 1.25rem; }
-    .pain-grid, .features-grid, .testimonials { grid-template-columns: 1fr; }
-    .templates-grid { grid-template-columns: 1fr 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
-    .steps { grid-template-columns: 1fr; }
-    .steps::before { display: none; }
-    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
-  }
-  @media (max-width: 500px) {
-    .templates-grid { grid-template-columns: 1fr; }
-  }
-</style>
+    /* ── MOBILE ── */
+    @media(max-width:768px){
+      nav{padding:13px 20px;}
+      .nav-center{display:none;}
+      .stats-strip{padding:0 20px;}
+      .stat{padding:18px 14px;min-width:130px;}
+      .wrap{padding:0 20px;}
+      .sec{padding:60px 0;}
+      .pipeline{gap:10px;}
+      .pipe-node::after{display:none;}
+      .pipe-node{min-width:90px;padding:16px 8px;}
+      .early-wrap{padding:80px 20px;}
+      footer{padding:22px 20px;flex-direction:column;text-align:center;}
+      .foot-links{justify-content:center;}
+      .ticker{padding:7px 20px;flex-wrap:wrap;}
+      .hero h1{letter-spacing:-2px;}
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- Ambient -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Nav -->
 <nav>
-  <a class="logo" href="#">ready<span>room</span></a>
-  <div class="nav-links">
-    <a href="#how">How it works</a>
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#signup" class="nav-cta">Get free host kit</a>
+  <div class="logo">Good<em>Wave</em></div>
+  <div class="nav-center">
+    <div class="pulse sm"></div>
+    DEVNET · LIVE
+  </div>
+  <div class="nav-right">
+    <button class="btn btn-ghost" onclick="scroll2('how')">How it works</button>
+    <button class="btn btn-primary" onclick="scroll2('access')">Join Early Pool</button>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- Ticker -->
+<div class="ticker">
+  <div class="pulse sm"></div>
+  <span class="ticker-live">LIVE</span>
+  <span class="ticker-sep">·</span>
+  Last sync: <span id="ticker-ts">fetching…</span>
+  <span class="ticker-sep">·</span>
+  Auto-refresh every 30s
+  <span class="ticker-sep">·</span>
+  <span id="ticker-api" style="color:var(--muted)"></span>
+  <span class="ticker-sep">·</span>
+  <span style="color:var(--muted)">cryptoknit.github.io/goodwave-devnet-demo/data/pool.json</span>
+</div>
+
+<!-- Hero -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-eyebrow"><div class="eyebrow-dot"></div>Free for Airbnb hosts</div>
-  <h1>Every checkout,<br><em>ready in minutes.</em></h1>
-  <!-- #5 tightened hero sub -->
-  <p class="hero-sub">Standardise every checkout — and know it's done before check-in. No texts. No guesswork.</p>
-  <!-- #7 trust micro-proof -->
-  <p class="hero-trust">Built by hosts. Made for Australia & NZ.</p>
-
-  <div class="hero-bridge">
-    <div class="bridge-pill"><div class="dot"></div>One link for your cleaner</div>
-    <span class="bridge-arrow">→</span>
-    <div class="bridge-pill"><div class="dot"></div>One board for you</div>
-    <span class="bridge-arrow">→</span>
-    <div class="bridge-pill"><div class="dot"></div>Everything goes green</div>
+  <div class="hero-pill"><div class="pulse sm"></div>Transparent Yield Infrastructure</div>
+  <h1>Staking you can<br/><span class="grad">actually verify</span></h1>
+  <p class="hero-body">
+    GoodWave proves yield in real-time — not promises on a page, but computed rewards,
+    visible fees, and an auditable ledger that updates every 30 seconds.
+    This is trust infrastructure.
+  </p>
+  <div class="hero-actions">
+    <button class="btn btn-primary btn-lg" onclick="scroll2('dashboard')">View Live Pool</button>
+    <button class="btn btn-ghost btn-lg" onclick="scroll2('how')">How It Works</button>
   </div>
-
-  <form class="hero-form" id="signup" name="waitlist-hero" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-    <input type="hidden" name="form-name" value="waitlist-hero">
-    <input type="hidden" name="bot-field" style="display:none">
-    <label class="sr-only" for="email-hero">Email address</label>
-    <input id="email-hero" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
-    <button class="btn-primary" type="submit">Get free host kit →</button>
-  </form>
-  <!-- #4 clarified hero note -->
-  <p class="hero-note">Free forever · No credit card · 25 templates + a personalised 10-template starter kit</p>
-  <p class="privacy-note" style="position:relative; z-index:1; animation: fadeUp 0.5s 0.38s ease both;">No spam. Unsubscribe anytime.</p>
+  <div class="hero-scroll">
+    <span>Live data below</span>
+    <div class="scroll-line"></div>
+  </div>
 </section>
 
-<!-- BOARD MOCKUP -->
-<div class="board-section">
-  <div class="board">
-    <div class="board-header">
-      <div>
-        <div class="board-title">🏡 Beach House — Checkout</div>
-        <div class="board-subtitle">Checkout 10am · Next guest 3pm · 2 roles assigned</div>
-      </div>
-      <div class="status-badge progress"><div class="badge-dot"></div>In progress</div>
-    </div>
-
-    <div class="role-block">
-      <div class="role-header">
-        <span class="role-label">🧹 Cleaner</span>
-        <span class="role-person">Sarah M. · Started 10:14am</span>
-      </div>
-      <!-- 5 cleaner tasks all done + 2 host tasks open = 5 of 7 done -->
-      <div class="task-row"><div class="check done"></div><div class="task-text done">Strip all beds and bag for laundry</div><div class="task-time">10:16</div></div>
-      <div class="task-row"><div class="check done"></div><div class="task-text done">Clean bathrooms — toilet, shower, vanity</div><div class="task-time">10:31</div></div>
-      <div class="task-row"><div class="check done"></div><div class="task-text done">Wipe kitchen benches and appliances</div><div class="task-meta"><div class="task-chip photo">📷 Photo</div><div class="task-time">10:44</div></div></div>
-      <div class="task-row"><div class="check done"></div><div class="task-text done">Make up all beds with fresh linen</div><div class="task-time">10:58</div></div>
-      <div class="task-row"><div class="check done"></div><div class="task-text done">Replace toiletries — shampoo, conditioner, soap</div><div class="task-time">11:04</div></div>
-    </div>
-
-    <div class="role-block">
-      <div class="role-header">
-        <span class="role-label">🏠 Host walkthrough</span>
-        <span class="role-person">You · Starts after cleaning</span>
-      </div>
-      <!-- 2 open host tasks = 5 done of 7 total. Exact match. -->
-      <div class="task-row"><div class="check open"></div><div class="task-text">Restock welcome basket — check inventory list</div></div>
-      <div class="task-row"><div class="check open"></div><div class="task-text">Final photo walkthrough — all rooms</div><div class="task-chip req">Required</div></div>
-    </div>
-
-    <div class="board-footer">
-      <div class="progress-wrap">
-        <!-- #1 bar width 71% = 5/7 -->
-        <div class="progress-bar"><div class="progress-fill"></div></div>
-        <div class="progress-text">5 of 7 done</div>
-      </div>
-      <button class="share-link-btn">Share cleaner link ↗</button>
-    </div>
+<!-- Stats Strip -->
+<div class="stats-strip">
+  <div class="stat fi">
+    <div class="stat-lbl">Total Staked</div>
+    <div class="stat-val blue" id="s-staked">—</div>
+    <div class="stat-sub" id="s-apy">Loading…</div>
+  </div>
+  <div class="stat fi">
+    <div class="stat-lbl">Total Earned</div>
+    <div class="stat-val green" id="s-earned">—</div>
+    <div class="stat-sub up" id="s-earned-sub">Loading…</div>
+  </div>
+  <div class="stat fi">
+    <div class="stat-lbl">Platform Fees</div>
+    <div class="stat-val gold" id="s-fees">—</div>
+    <div class="stat-sub">5% of yield · fully visible</div>
+  </div>
+  <div class="stat fi">
+    <div class="stat-lbl">Active Wallets</div>
+    <div class="stat-val purple" id="s-wallets">—</div>
+    <div class="stat-sub" id="s-wallet-names">Loading…</div>
   </div>
 </div>
 
-<!-- #3 MOAT STRIP — tightened language -->
-<div class="moat-strip">
-  <div class="moat-item">Cleaner link — no login</div>
-  <div class="moat-item">Photo proof on key tasks</div>
-  <div class="moat-item">Live status (no follow-ups)</div>
-  <div class="moat-item">1 property to 20+</div>
-</div>
+<!-- Dashboard -->
+<section class="sec" id="dashboard" style="position:relative;z-index:1;">
+  <div class="wrap">
+    <div class="sec-label fi">Pool Analytics</div>
+    <div class="sec-title fi">Live Pool Performance</div>
 
-<!-- PROBLEM -->
-<section class="problem">
-  <h2>Most hosting headaches come down to one thing: <em>nothing was written down.</em></h2>
-  <div class="pain-grid">
-    <div class="pain-card"><span class="pain-icon">😤</span><h4>Unreliable cleaners</h4><p>No checklist means no standard. Every cleaner does it differently — and you find out at check-in.</p></div>
-    <div class="pain-card"><span class="pain-icon">⚠️</span><h4>Dispute resolution</h4><p>Guest claims it was dirty. You have no documentation. You lose — even when you're right.</p></div>
-    <div class="pain-card"><span class="pain-icon">⭐</span><h4>Bad reviews</h4><p>One missed task causes a 3-star review. Without a system, it keeps happening.</p></div>
-    <div class="pain-card"><span class="pain-icon">🔄</span><h4>No method</h4><p>You're reinventing the same process every checkout. There's no source of truth for your operation.</p></div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="section-label">How it works</div>
-  <h2 class="section-title">Set it up once. Run it forever.</h2>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Get your free host kit</h3>
-      <p>Answer 3 questions about your property. Instantly receive a personalised starter kit of 10 ready-to-use templates.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Share with your cleaner</h3>
-      <p>Send one link. Your cleaner opens it on their phone — no login, no app — and checks tasks off as they go.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Watch it go green</h3>
-      <p>Your board updates in real time. When every task is checked off, you get notified. Property status: ready.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="features-inner">
-    <div class="section-label">What's included</div>
-    <h2 class="section-title">Everything your operation needs.</h2>
-    <div class="features-grid">
-      <!-- #6 simplified tags: included / cleaner-first / pro -->
-      <div class="feature-card"><span class="feature-icon">📋</span><h3>25+ ready-to-use templates</h3><p>Cleaning checklists, guest messages, inventory logs, damage reports — researched, written, and ready to customise for your property.</p><span class="feature-tag included">Included</span></div>
-      <div class="feature-card"><span class="feature-icon">📱</span><h3>Cleaner-first mobile experience</h3><p>Send a link. Your cleaner checks tasks off on their phone, attaches photos on key tasks, marks complete. No login, no friction.</p><span class="feature-tag cleaner">Cleaner-first</span></div>
-      <div class="feature-card"><span class="feature-icon">🟢</span><h3>Live status board</h3><p>See what's done, what's pending, who's working on what — across every role, in real time. Know without asking.</p><span class="feature-tag pro">Pro</span></div>
-      <div class="feature-card"><span class="feature-icon">📸</span><h3>Timestamped photo proof</h3><p>Require photo evidence on key tasks. A clear paper trail protects you in guest disputes and insurance claims.</p><span class="feature-tag pro">Pro</span></div>
-      <div class="feature-card"><span class="feature-icon">✉️</span><h3>Guest message sequences</h3><p>Pre-arrival, mid-stay, and review request messages that feel personal. Copy, customise, send — in seconds.</p><span class="feature-tag included">Included</span></div>
-      <div class="feature-card"><span class="feature-icon">🔧</span><h3>Maintenance & damage logs</h3><p>Log issues with photos and notes. A clear paper trail for every incident — useful long after the guest checks out.</p><span class="feature-tag pro">Pro</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- #8 TEMPLATES PREVIEW -->
-<section class="templates-preview">
-  <div class="section-label">What's in the kit</div>
-  <h2 class="section-title">25 templates, ready to use.</h2>
-  <div class="templates-grid">
-    <div class="template-item"><span class="template-emoji">🧹</span><div class="template-info"><div class="template-name">Turnover checklist</div><div class="template-role">Cleaner</div></div></div>
-    <div class="template-item"><span class="template-emoji">⚡</span><div class="template-info"><div class="template-name">Same-day turnaround</div><div class="template-role">Cleaner</div></div></div>
-    <div class="template-item"><span class="template-emoji">🫧</span><div class="template-info"><div class="template-name">Deep clean checklist</div><div class="template-role">Cleaner</div></div></div>
-    <div class="template-item"><span class="template-emoji">📦</span><div class="template-info"><div class="template-name">Inventory restock log</div><div class="template-role">Host</div></div></div>
-    <div class="template-item"><span class="template-emoji">✉️</span><div class="template-info"><div class="template-name">Pre-arrival message</div><div class="template-role">Guest comms</div></div></div>
-    <div class="template-item"><span class="template-emoji">🔑</span><div class="template-info"><div class="template-name">Check-in instructions</div><div class="template-role">Guest comms</div></div></div>
-    <div class="template-item"><span class="template-emoji">💬</span><div class="template-info"><div class="template-name">Mid-stay check-in</div><div class="template-role">Guest comms</div></div></div>
-    <div class="template-item"><span class="template-emoji">⭐</span><div class="template-info"><div class="template-name">Review request</div><div class="template-role">Guest comms</div></div></div>
-    <div class="template-item"><span class="template-emoji">📋</span><div class="template-info"><div class="template-name">House rules</div><div class="template-role">Guest comms</div></div></div>
-    <div class="template-item"><span class="template-emoji">⚠️</span><div class="template-info"><div class="template-name">Damage report</div><div class="template-role">Host</div></div></div>
-    <div class="template-item"><span class="template-emoji">🔧</span><div class="template-info"><div class="template-name">Maintenance log</div><div class="template-role">Host</div></div></div>
-    <div class="template-item"><span class="template-emoji">🌿</span><div class="template-info"><div class="template-name">Seasonal prep checklist</div><div class="template-role">Host</div></div></div>
-  </div>
-  <p class="templates-more">Plus <span>13 more templates</span> included in your free kit.</p>
-  <div style="text-align:center; margin-top: 1.5rem;">
-    <button class="btn-primary">Get free host kit →</button>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="pricing-inner">
-    <div class="section-label">Pricing</div>
-    <h2 class="section-title">Start free. Upgrade when you're ready.</h2>
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <div class="plan-name">Free</div>
-        <div class="plan-price">$0</div>
-        <div class="plan-period">forever</div>
-        <ul class="plan-features">
-          <li>1 property</li>
-          <li>25 core templates</li>
-          <li>Cleaner checklist sharing</li>
-          <li>Guest message templates</li>
-          <li>PDF export</li>
-        </ul>
-        <!-- #2 consistent CTA -->
-        <button class="btn-ghost">Get free host kit</button>
+    <!-- Chart -->
+    <div class="chart-card fi">
+      <div class="chart-head">
+        <div>
+          <div class="chart-head-title">Staked Capital &amp; Yield Over Time</div>
+          <div class="chart-head-sub">Computed from live ledger — every point is real</div>
+        </div>
+        <div class="chart-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:#5b9cf6"></div>Staked</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#00e5a0"></div>Earned</div>
+          <div class="leg-item"><div class="leg-dot" style="background:#ffb830;opacity:.7"></div>Fees</div>
+        </div>
       </div>
-      <div class="pricing-card featured">
-        <div class="plan-name">Pro</div>
-        <div class="plan-price"><sup>$</sup>9</div>
-        <div class="plan-period">per month · cancel anytime</div>
-        <div style="font-size:0.78rem; color: var(--teal); font-weight: 600; margin: -1.1rem 0 1.75rem;">Unlimited properties included.</div>
-        <ul class="plan-features">
-          <li>Unlimited properties</li>
-          <li>100+ template library</li>
-          <li>Live status board</li>
-          <li>Timestamped photo proof</li>
-          <li>Multi-role task assignments</li>
-          <li>Guest message sequences</li>
-          <li>Maintenance & damage logs</li>
-          <li>Community marketplace</li>
-        </ul>
-        <button class="btn-primary-full">Start 14-day Pro trial</button>
+      <div class="chart-canvas-wrap">
+        <canvas id="mainChart"></canvas>
+        <div id="chart-msg"></div>
+      </div>
+    </div>
+
+    <!-- Wallets — rendered dynamically from pool.json.wallets -->
+    <div class="sec-label fi" style="margin-top:36px">Wallet Breakdown</div>
+    <div class="wallet-grid" id="wallet-grid">
+      <!-- populated by renderWallets() -->
+    </div>
+
+    <!-- Devnet notice -->
+    <div class="devnet-pill fi">
+      <div class="pulse amber sm"></div>
+      <span>
+        <strong>DEVNET MODE</strong> — Live simulation running on real infrastructure.
+        Data is computed, committed and pushed automatically every ~30 seconds.
+        Not mocked. Not static. Mainnet deployment is next.
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="sec" id="how" style="position:relative;z-index:1;background:var(--surface);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);">
+  <div class="wrap">
+    <div class="sec-label fi">Architecture</div>
+    <div class="sec-title fi">From engine to your screen</div>
+    <div class="pipeline">
+      <div class="pipe-node fi">
+        <div class="pipe-icon">⚙️</div>
+        <div class="pipe-name">Staking Engine</div>
+        <div class="pipe-desc">Continuously simulates deposits, yield accrual, fee extraction</div>
+      </div>
+      <div class="pipe-node fi">
+        <div class="pipe-icon">📒</div>
+        <div class="pipe-name">Ledger</div>
+        <div class="pipe-desc">Every reward, fee and wallet written line-by-line to ledger.tsv</div>
+      </div>
+      <div class="pipe-node fi">
+        <div class="pipe-icon">📊</div>
+        <div class="pipe-name">Indexer</div>
+        <div class="pipe-desc">Aggregates raw ledger into metrics and outputs index.json</div>
+      </div>
+      <div class="pipe-node fi">
+        <div class="pipe-icon">🌐</div>
+        <div class="pipe-name">Publisher</div>
+        <div class="pipe-desc">Commits and pushes to GitHub every ~30 seconds, automatically</div>
+      </div>
+      <div class="pipe-node fi">
+        <div class="pipe-icon">👁️</div>
+        <div class="pipe-name">Dashboard</div>
+        <div class="pipe-desc">Live data, visible mechanics — you're here</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section style="padding: 0 5rem 5rem; background: var(--charcoal);">
-  <div class="faq-grid" style="max-width: 700px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; padding: 1.5rem;">
-      <div style="font-size: 0.82rem; font-weight: 700; color: var(--teal-light); margin-bottom: 0.5rem;">Does my cleaner need an account?</div>
-      <div style="font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.6;">No. You send them a link. They open it on their phone and start checking tasks off — no sign-up, no app download.</div>
-    </div>
-    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; padding: 1.5rem;">
-      <div style="font-size: 0.82rem; font-weight: 700; color: var(--teal-light); margin-bottom: 0.5rem;">Can I use this with just 1 property?</div>
-      <div style="font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.6;">Yes — the free tier is built for exactly that. One property, 25 templates, no time limit. Upgrade only if you need more.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="social">
-  <div class="social-inner">
-    <div class="section-label">From hosts who've been there</div>
-    <h2 class="section-title">The feeling when everything's green.</h2>
-    <div class="testimonials">
-      <div class="testimonial">
-        <div class="stars">★★★★★</div>
-        <p>"My cleaner used to text me asking what to do next. Now she follows the list and I get a notification when it's done. I don't have to think about it."</p>
-        <div class="t-author"><strong>Megan T.</strong>Host · Byron Bay, NSW</div>
+<!-- Why different -->
+<section class="sec" style="position:relative;z-index:1;">
+  <div class="wrap">
+    <div class="sec-label fi">Differentiation</div>
+    <div class="sec-title fi">Why this is different</div>
+    <div class="why-grid">
+      <div class="why-card fi">
+        <div class="why-icon">🔍</div>
+        <div class="why-title">Verifiable yield</div>
+        <div class="why-desc">Every reward is computed from real staking logic and written to an auditable ledger. Not a number on a screen — a proof.</div>
       </div>
-      <div class="testimonial">
-        <div class="stars">★★★★★</div>
-        <p>"A guest claimed the bathroom was dirty. I had a timestamped photo from the cleaner's checklist two hours before check-in. Case closed."</p>
-        <div class="t-author"><strong>James R.</strong>Host · Queenstown, NZ</div>
+      <div class="why-card fi">
+        <div class="why-icon">⚡</div>
+        <div class="why-title">Real-time proof</div>
+        <div class="why-desc">Data updates every ~30 seconds from a live pipeline. Inspect the raw JSON files directly — nothing is hidden.</div>
       </div>
-      <div class="testimonial">
-        <div class="stars">★★★★★</div>
-        <p>"I manage 6 properties. Before Readyroom I was the system — in my head, on text messages. Now every property runs the same way whether I'm there or not."</p>
-        <div class="t-author"><strong>Priya M.</strong>Property manager · Melbourne, VIC</div>
+      <div class="why-card fi">
+        <div class="why-icon">💸</div>
+        <div class="why-title">Transparent fees</div>
+        <div class="why-desc">Platform takes exactly 5% of yield — visible in every payout, trackable in the ledger. No hidden extraction.</div>
+      </div>
+      <div class="why-card fi">
+        <div class="why-icon">🏗️</div>
+        <div class="why-title">Trust infrastructure</div>
+        <div class="why-desc">Trust is earned through visibility, not claimed through marketing. Transparency is the product, not a feature.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="final-cta">
-  <h2>Your whole operation.<br><em>Always ready.</em></h2>
-  <p>Join hosts who've stopped wondering if it's done.</p>
-  <form class="hero-form" name="waitlist-cta" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="animation:none;position:relative;z-index:1;">
-    <input type="hidden" name="form-name" value="waitlist-cta">
-    <input type="hidden" name="bot-field" style="display:none">
-    <label class="sr-only" for="email-cta">Email address</label>
-    <input id="email-cta" type="email" name="email" placeholder="your@email.com" autocomplete="email" required>
-    <button class="btn-primary" type="submit">Get free host kit →</button>
-  </form>
-  <p class="hero-note" style="position:relative;z-index:1;">Free forever · No credit card · Instant access</p>
-  <p class="privacy-note" style="position:relative;z-index:1;">No spam. Unsubscribe anytime.</p>
+<!-- Early Access -->
+<section style="position:relative;z-index:1;background:var(--surface);border-top:1px solid var(--edge);" id="access">
+  <div class="early-wrap">
+    <div class="hero-pill" style="margin-bottom:28px"><div class="pulse sm"></div>Early Pool · Limited Access</div>
+    <h2>Be early to<br/><em>real yield</em></h2>
+    <p>
+      GoodWave is moving from devnet to mainnet. Early pool members get
+      priority access, reduced platform fees, and a front-row seat to
+      transparent DeFi infrastructure being built in public.
+    </p>
+    <div class="signup-row" id="signup-row">
+      <input class="signup-input" id="email-input" type="email" placeholder="your@email.com" />
+      <button class="btn-join" onclick="handleSignup()">Join Early Pool</button>
+    </div>
+    <div class="signup-ok" id="signup-ok">
+      ✅ You're on the list — we'll reach out when early pool opens.
+    </div>
+    <p class="signup-note">No spam. No commitment. Just a spot in line.</p>
+  </div>
 </section>
 
+<!-- Footer -->
 <footer>
-  <div class="footer-logo">readyroom</div>
-  <div>© 2025 Readyroom · Built for hosts, cleaners, and everyone in between</div>
-  <div><a href="#" style="color:inherit;text-decoration:none;">Privacy</a> · <a href="#" style="color:inherit;text-decoration:none;">Terms</a></div>
+  <div class="foot-logo">Good<em>Wave</em></div>
+  <div class="foot-links">
+    <a href="data/pool.json" target="_blank">pool.json</a>
+    <a href="data/index.json" target="_blank">index.json</a>
+    <a href="data/ledger.tsv" target="_blank">ledger.tsv</a>
+  </div>
+  <div class="foot-note">Devnet · All data is public · Built in public</div>
 </footer>
 
+<script>
+/* ── CONFIG ─────────────────────────────────────────────────── */
+const DATA          = './data';
+const TALLY_ID      = 'YOUR_TALLY_FORM_ID'; // replace with form ID from tally.so
+const REFRESH_POOL  = 30_000;
+const REFRESH_CHART = 60_000;
+
+// Wallet card colour palette — cycles if backend returns more wallets than colours
+const WALLET_PALETTE = ['#5b9cf6','#00e5a0','#c084fc','#ffb830','#ff6b8a','#4ade80'];
+
+/* ── STATE ──────────────────────────────────────────────────── */
+let chart    = null;
+let prevVals = {};
+
+/* ── HELPERS ────────────────────────────────────────────────── */
+const $      = id => document.getElementById(id);
+const fmt    = n  => n == null ? '—' : Number(n).toLocaleString('en-US', { maximumFractionDigits: 2 });
+const scroll2 = id => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+
+function flash(el) {
+  el.style.opacity   = '0.25';
+  el.style.transition = 'none';
+  requestAnimationFrame(() => {
+    el.style.transition = 'opacity .45s';
+    el.style.opacity    = '1';
+  });
+}
+
+async function getJSON(path) {
+  const r = await fetch(path + '?_=' + Date.now());
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+/* ── WALLET RENDERER ────────────────────────────────────────── */
+// Renders wallet cards entirely from pool.json.wallets keys.
+// No names, no counts are hard-coded here.
+function renderWallets(wallets, totalStaked) {
+  const grid = $('wallet-grid');
+  if (!wallets || !Object.keys(wallets).length) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;background:var(--panel);border:1px solid var(--edge);
+        border-radius:12px;padding:24px;text-align:center;">
+        <div style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--muted);margin-bottom:8px">Wallet Breakdown</div>
+        <div style="font-size:11px;color:var(--muted)">
+          Per-wallet data not yet available — pending backend update.</div>
+      </div>`;
+    return;
+  }
+
+  const entries = Object.entries(wallets);
+  const total   = totalStaked || 1;
+
+  // Escape wallet name before insertion into innerHTML
+  const escHtml = str => str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+  grid.innerHTML = entries.map(([name, d], i) => {
+    const color   = WALLET_PALETTE[i % WALLET_PALETTE.length];
+    const pct     = d.staked != null ? Math.min((d.staked / total) * 100, 100).toFixed(1) : 0;
+    const staked  = d.staked != null ? fmt(d.staked) : '—';
+    const earned  = d.earned != null ? fmt(d.earned) : '—';
+    // Truncate long addresses, then escape before innerHTML insertion
+    const raw     = name.length > 20
+      ? name.slice(0, 8) + '…' + name.slice(-6)
+      : name.charAt(0).toUpperCase() + name.slice(1);
+    const label   = escHtml(raw);
+
+    return `
+      <div class="wallet-card fi">
+        <div class="wc-name">
+          <div class="wc-dot" style="background:${color}"></div>
+          ${label}
+        </div>
+        <div class="wc-row"><span>Staked</span><span>${staked}</span></div>
+        <div class="wc-row"><span>Earned</span>
+          <span style="color:var(--seafoam)">${earned}</span></div>
+        <div class="wc-bar-bg">
+          <div class="wc-bar" style="background:${color};width:${pct}%"></div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Unobserve prior cards before observing new ones (grid was replaced via innerHTML)
+  // obs.unobserve is a no-op on detached nodes — safe to call regardless
+  grid.querySelectorAll('.fi').forEach(el => { obs.unobserve(el); obs.observe(el); });
+}
+
+/* ── POOL LOADER ────────────────────────────────────────────── */
+async function loadPool() {
+  try {
+    const p = await getJSON(DATA + '/pool.json');
+
+    // Stats
+    const pairs = [
+      ['s-staked', p.total_staked],
+      ['s-earned', p.total_earned],
+      ['s-fees',   p.fees_total],
+    ];
+    pairs.forEach(([id, val]) => {
+      const el = $(id);
+      const v  = fmt(val);
+      if (prevVals[id] !== v) { flash(el); el.textContent = v; prevVals[id] = v; }
+    });
+
+    // Sub-labels
+    if (p.total_staked > 0 && p.total_earned != null) {
+      $('s-apy').textContent = 'APY: ' + ((p.total_earned / p.total_staked) * 100).toFixed(2) + '%';
+    }
+    if (p.total_earned > 0) {
+      $('s-earned-sub').textContent = '↑ ' + fmt(p.total_earned) + ' earned total';
+    }
+
+    // Active wallets — data-driven count and names
+    const wallets = p.wallets;
+    if (wallets) {
+      const keys  = Object.keys(wallets);
+      const count = keys.length;
+      $('s-wallets').textContent = count;
+      $('s-wallet-names').textContent = keys
+        .map(k => k.charAt(0).toUpperCase() + k.slice(1))
+        .join(' · ');
+    } else {
+      $('s-wallets').textContent      = '—';
+      $('s-wallet-names').textContent = 'pending backend data';
+    }
+
+    // Timestamp
+    const ts = new Date(p.updated_at || p.ts || Date.now());
+    $('ticker-ts').textContent = ts.toLocaleTimeString();
+
+    // Wallet cards — fully data-driven
+    renderWallets(wallets, p.total_staked);
+
+  } catch (e) {
+    $('ticker-ts').textContent = 'reconnecting…';
+    if (!prevVals['s-staked']) {
+      // First load failed — blank everything, nothing to preserve
+      ['s-staked','s-earned','s-fees'].forEach(id => $(id).textContent = '—');
+      $('s-apy').textContent          = 'feed reconnecting…';
+      $('s-wallets').textContent      = '—';
+      $('s-wallet-names').textContent = 'reconnecting…';
+    }
+    // Intentional: wallet cards are NOT cleared on reconnect failure.
+    // Last known values are preserved — this is the intended degradation behaviour.
+    console.warn('[GoodWave] pool.json unreachable:', e.message);
+  }
+}
+
+/* ── HEALTH LOADER ──────────────────────────────────────────── */
+// Separate fetch — health.json is optional; failure is silent.
+// Surfaces api_reachable, index_copied, ledger_copied from publisher.
+async function loadHealth() {
+  try {
+    const h     = await getJSON(DATA + '/health.json');
+    const apiEl = $('ticker-api');
+    if (!apiEl) return;
+
+    // Build status segments from all three publisher flags
+    const api    = h.api_reachable  !== false;  // default true if field absent
+    const idx    = h.index_copied   !== false;
+    const ledger = h.ledger_copied  !== false;
+    const allOk  = api && idx && ledger;
+
+    if (allOk) {
+      apiEl.textContent = '· pipeline ✓';
+      apiEl.style.color = 'var(--seafoam)';
+    } else {
+      // Build a specific degraded message so the investor knows what's partial
+      const parts = [];
+      if (!api)    parts.push('api ✗');
+      if (!idx)    parts.push('index ✗');
+      if (!ledger) parts.push('ledger ✗');
+      apiEl.textContent = '· ' + parts.join(' · ');
+      apiEl.style.color = 'var(--amber)';
+    }
+  } catch(_) {
+    // health.json absent or 404 — clear silently, no false signal
+    const apiEl = $('ticker-api');
+    if (apiEl) apiEl.textContent = '';
+  }
+}
+
+/* ── CHART LOADER ───────────────────────────────────────────── */
+async function loadChart() {
+  try {
+    const idx = await getJSON(DATA + '/index.json');
+    const pts  = idx.history || idx.points || [];
+
+    if (!pts.length) {
+      showChartMsg('Awaiting first data points from the pool engine…');
+      return;
+    }
+
+    const labels = pts.map((_, i) => 'T' + (i + 1));
+    const staked  = pts.map(p => p.total_staked ?? p.staked  ?? 0);
+    const earned  = pts.map(p => p.total_earned ?? p.earned  ?? 0);
+    const fees    = pts.map(p => p.fees_total   ?? p.fees    ?? 0);
+
+    renderChart(labels, staked, earned, fees);
+  } catch (e) {
+    if (!chart) showChartMsg('Live feed reconnecting — check back in a moment.');
+    console.warn('[GoodWave] index.json unreachable:', e.message);
+  }
+}
+
+function showChartMsg(msg) {
+  const m = $('chart-msg');
+  m.textContent    = msg;
+  m.style.display  = 'flex';
+  const c = $('mainChart');
+  if (c) c.style.display = 'none';
+}
+
+function renderChart(labels, staked, earned, fees) {
+  $('chart-msg').style.display = 'none';
+  const canvas = $('mainChart');
+  canvas.style.display = 'block';
+  const ctx = canvas.getContext('2d');
+  if (chart) chart.destroy();
+
+  const grad = (color, a1, a2) => {
+    const g = ctx.createLinearGradient(0, 0, 0, 260);
+    g.addColorStop(0, color.replace('1)', a1 + ')'));
+    g.addColorStop(1, color.replace('1)', a2 + ')'));
+    return g;
+  };
+
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Staked',
+          data: staked,
+          borderColor: '#5b9cf6',
+          backgroundColor: grad('rgba(91,156,246,1)', '.16', '0'),
+          borderWidth: 2, fill: true, tension: 0.42,
+          pointRadius: 0, pointHoverRadius: 4,
+        },
+        {
+          label: 'Earned',
+          data: earned,
+          borderColor: '#00e5a0',
+          backgroundColor: grad('rgba(0,229,160,1)', '.13', '0'),
+          borderWidth: 2, fill: true, tension: 0.42,
+          pointRadius: 0, pointHoverRadius: 4,
+        },
+        {
+          label: 'Fees',
+          data: fees,
+          borderColor: '#ffb830',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5, borderDash: [4, 4],
+          fill: false, tension: 0.42,
+          pointRadius: 0, pointHoverRadius: 4,
+        },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0b1f3a',
+          borderColor: 'rgba(255,255,255,.08)', borderWidth: 1,
+          titleColor: '#e8f0fe', bodyColor: '#6c8ab0', padding: 12,
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,.04)', drawBorder: false },
+          ticks: { color: '#6c8ab0', font: { family: 'JetBrains Mono', size: 10 } }
+        },
+        y: {
+          grid: { color: 'rgba(255,255,255,.04)', drawBorder: false },
+          ticks: { color: '#6c8ab0', font: { family: 'JetBrains Mono', size: 10 } }
+        }
+      }
+    }
+  });
+}
+
+/* ── SIGNUP ─────────────────────────────────────────────────── */
+// Only shows success state on confirmed submission.
+// If Tally ID is unset: shows an honest "not connected" message.
+// If fetch throws: shows error, keeps form open.
+async function handleSignup() {
+  const email = $('email-input').value.trim();
+  if (!email || !email.includes('@')) {
+    $('email-input').style.borderColor = 'rgba(255,77,109,.5)';
+    return;
+  }
+  const btn = document.querySelector('.btn-join');
+  btn.textContent = 'Joining…';
+  btn.disabled    = true;
+
+  if (TALLY_ID === 'YOUR_TALLY_FORM_ID') {
+    // Signup not yet wired — be honest, log nothing misleading
+    $('signup-ok').textContent  = '⚠ Signup not yet connected. Check back soon.';
+    $('signup-ok').style.color  = 'var(--amber)';
+    $('signup-row').style.display = 'none';
+    $('signup-ok').style.display  = 'block';
+    return;
+  }
+
+  try {
+    const res = await fetch('https://tally.so/r/' + TALLY_ID, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body:    new URLSearchParams({ email }),
+    });
+
+    if (res.ok || res.status === 0 /* opaque CORS response from Tally */) {
+      $('signup-row').style.display = 'none';
+      $('signup-ok').style.display  = 'block';
+    } else {
+      throw new Error('HTTP ' + res.status);
+    }
+  } catch(e) {
+    btn.textContent = 'Join Early Pool';
+    btn.disabled    = false;
+    $('email-input').style.borderColor = 'rgba(255,77,109,.5)';
+    $('email-input').placeholder       = 'Signup failed — try again';
+    console.warn('[GoodWave] signup error:', e.message);
+  }
+}
+
+$('email-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleSignup();
+  $('email-input').style.borderColor = '';
+});
+
+/* ── SCROLL FADE ────────────────────────────────────────────── */
+const obs = new IntersectionObserver(entries =>
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+  { threshold: 0.08 }
+);
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+/* ── INIT ───────────────────────────────────────────────────── */
+loadPool();
+loadChart();
+loadHealth();
+setInterval(loadPool,   REFRESH_POOL);
+setInterval(loadChart,  REFRESH_CHART);
+setInterval(loadHealth, REFRESH_POOL);
+</script>
 </body>
 </html>
